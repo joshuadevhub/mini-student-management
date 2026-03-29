@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const phoneNumber = document.getElementById("phone-number");
   const offeredSubject = document.getElementById("offered-subject");
   const address = document.getElementById("address");
+  const profilePic = document.getElementById("profile-pic");
 
   const touched = {}; // track fields touched for live validation
 
@@ -90,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function validateNotEmpty(input, message) {
     const value = input.value.trim();
     if (value === "") {
-      clearError(input); // empty → no error
+      setErrorFor(input, message); // empty → no error
       return false;
     }
     setSuccessFor(input);
@@ -221,31 +222,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Get the value of image uploaded
+  let imgSrcValue;
+  profilePic.addEventListener("change", (e) => {
+    if (e.target.files.length === 0) {
+      setErrorFor(profilePic, "No image selected")
+    } else {
+      setSuccessFor(profilePic);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        imgSrcValue = event.target.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  });
+
   // ===============================
   // Submit
   // ===============================
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const isFirstNameValid = validateNotEmpty(firstName);
-    const isLastNameValid = validateNotEmpty(lastName);
-    const isDepartmentValid = validateNotEmpty(studentDepartment);
+    const isFirstNameValid = validateNotEmpty(firstName, "First Name is required");
+    const isLastNameValid = validateNotEmpty(lastName, "Last Name is required");
+    const isDepartmentValid = validateNotEmpty(studentDepartment, "Department is required");
     const isPhoneValid = validatePhone(phoneNumber);
-    const isEmailValid = validateEmail(email);
-    const isAddressValid = validateNotEmpty(address);
+    const isEmailValid = email.value.trim() || validateEmail(email);
+    const isAddressValid = validateNotEmpty(address, "Address is required");
     const isSubjectValid = validateSubjects(offeredSubject);
 
     const valid =
       isFirstNameValid &&
       isLastNameValid &&
       isDepartmentValid &&
-      isPhoneValid &&
       isEmailValid &&
+      isPhoneValid &&
       isAddressValid &&
       isSubjectValid;
 
     if (!valid) return;
-
+    if (!imgSrcValue) {
+      setErrorFor(profilePic, "Image is required");
+      return;
+    }
     const student = {
       firstName: firstName.value.trim(),
       lastName: lastName.value.trim(),
@@ -257,6 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
         (opt) => opt.value,
       ),
       address: address.value.trim(),
+      imgSrc: imgSrcValue,
     };
 
     const existingStudents = JSON.parse(localStorage.getItem("students")) || [];
@@ -267,11 +287,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (studentExist) {
       alert("Student already exists");
       form.reset();
+      imgSrcValue = null;
+      Object.keys(touched).forEach((key) => (touched[key] = false));
     } else {
       existingStudents.push(student);
       localStorage.setItem("students", JSON.stringify(existingStudents));
       alert("Student Registered");
+      console.log(existingStudents);
       form.reset();
+      imgSrcValue = null;
+      Object.keys(touched).forEach((key) => (touched[key] = false));
 
       // clear all classes after reset
       document
