@@ -6,52 +6,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Students List</title>
 
-  <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/students-list.css">
 </head>
 
 <body>
   
-  <header></header>
+  <!-- Header -->
+  <header class="app-header">
+      <div class="logo">
+          <div class="logo-icon"></div>
+          <span>Student Manager</span>
+      </div>
+      <button class="menu-btn" aria-label="Open Menu">
+          <i class="ph ph-list"></i>
+      </button>
+  </header>
 
   <main>
-    <div class="student-cards-container">
-
-      <div class="each-student-card">
-        <img src="images/joshua.jpg" alt="Joshua Image" loading="lazy">
-        <div class="student-content">
-          <h2>Elemide Joshua</h2>
-          <h5>Founder and C.E.O</h5>
-
-          <div class="info">
-            <div class="info-content">
-              <p>Location</p>
-              <p>Lagos Nigeria</p>
-            </div>
-
-            <div class="info-content">
-              <p>Student ID</p>
-              <p>2023-100-02</p>
-            </div>
-
-            <div class="info-content">
-              <p>Phone</p>
-              <p>+234 702 5908 646</p>
-            </div>
+    <div class="card-container">
+      <!-- Student Card -->
+      <div class="student-card" role="button" tabindex="0">
+        <!-- Top Section -->
+        <div class="card-header">
+          <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Student Profile" class="avatar">
+          <div class="header-info">
+            <h3>Alex Rivera</h3>
+            <p class="dept">Computer Science • Year 3</p>
           </div>
+        </div>
+    
+        <!-- Middle Section -->
+        <div class="card-body">
+          <div class="contact-item">
+            <i class="ph ph-phone"></i>
+            <span>+1 (555) 012-3456</span>
+          </div>
+          <div class="contact-item">
+            <i class="ph ph-envelope-simple"></i>
+            <span>a.rivera@university.edu</span>
+          </div>
+        </div>
+    
+        <!-- Bottom Section (Tags) -->
+        <div class="card-footer">
+          <span class="subject-tag">Data Structures</span>
+          <span class="subject-tag">UI Design</span>
+          <span class="subject-tag">Neural Nets</span>
         </div>
       </div>
 
-      <div class="each-student-card">
-        <img src="images/nifemi.jpg" alt="Nifemi Image" loading="lazy">
-        <div class="student-content"></div>
-      </div>
-    </div>
 
+    </div>
+    
+    <!-- Icons Library -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
   </main>
 
-  <footer></footer>
-
+  <footer class="app-footer">
+    <nav class="footer-nav">
+        <a href="#" class="nav-item">
+            <i class="ph ph-house-simple"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item active">
+            <i class="ph ph-users"></i>
+            <span>Students</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ph ph-chart-bar"></i>
+            <span>Reports</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="ph ph-gear-six"></i>
+            <span>Settings</span>
+        </a>
+    </nav>
+</footer>
 </body>
 
 </html>
