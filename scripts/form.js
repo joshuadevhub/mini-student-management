@@ -140,6 +140,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
+  function showToast(message, type = "success") {
+    const toast = document.getElementById("toast");
+
+    const icon = type === "success" ? "✔️" : "⚠️";
+    toast.innerHTML = `${icon} ${message}`;
+
+    toast.className = `toast show ${type}`;
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+
   // ===============================
   // Live Validation Event Helper
   // ===============================
@@ -255,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
       isFirstNameValid &&
       isLastNameValid &&
       isDepartmentValid &&
-      isEmailValid &&
+      // isEmailValid &&
       isPhoneValid &&
       isAddressValid &&
       isSubjectValid;
@@ -285,23 +298,24 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (studentExist) {
-      alert("Student already exists");
+      showToast("Student already exists", "error");
       form.reset();
       imgSrcValue = null;
       Object.keys(touched).forEach((key) => (touched[key] = false));
+      document
+        .querySelectorAll(".form-group")
+        .forEach((fc) => fc.classList.remove("error", "success"));
     } else {
       existingStudents.push(student);
       localStorage.setItem("students", JSON.stringify(existingStudents));
-      alert("Student Registered");
+      showToast("Student registered successfully", "success");
       console.log(existingStudents);
       form.reset();
       imgSrcValue = null;
       Object.keys(touched).forEach((key) => (touched[key] = false));
 
       // clear all classes after reset
-      document
-        .querySelectorAll(".form-group")
-        .forEach((fc) => fc.classList.remove("error", "success"));
+      document.querySelectorAll(".form-group").forEach((fc) => fc.classList.remove("error", "success"));
     }
   });
 });
