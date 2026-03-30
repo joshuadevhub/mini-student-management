@@ -59,14 +59,27 @@
 
 
     </div>
-    
+
+    <!-- Empty State -->
+    <div class="hidden" id="empty-state">
+      <p>No student added yet 📭</p>
+      <small>Start by registering a student</small>
+      <button id="add-student-btn">Add a student</button>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading-state">
+      <div class="spinner"></div>
+      <p>Loading Students...</p>
+    </div>
+
     <!-- Icons Library -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
   </main>
 
   <footer class="app-footer">
     <nav class="footer-nav">
-        <a href="#" class="nav-item">
+        <a href="index.html" class="nav-item">
             <i class="ph ph-house-simple"></i>
             <span>Home</span>
         </a>
