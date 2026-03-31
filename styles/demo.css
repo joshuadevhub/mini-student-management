@@ -78,7 +78,7 @@ body {
   justify-content: center;
   align-items: center;
   flex: 1;
-  padding: 20px 16px;
+  padding: 20px;
 }
 
 .container{
@@ -107,15 +107,15 @@ form .form-group{
   margin-bottom: 1.5rem;
 }
 .form-group label{
-  font-size: 1.1rem;
-  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
   display: block;
   font-weight: 600;
   color: var(--text-secondary);
 }
 .form-group input, .form-group select, .form-group textarea{
   width: 100%;
-  padding: 10px;
+  padding: 8.5px;
   font-size: 1.1rem;
   border-radius: 10px;
   border: 1px solid var(--glass-border);
@@ -152,7 +152,7 @@ form button{
   width: 100%;
   display: block;
   margin: 0 auto;
-  padding: 12px;
+  padding: 10px;
   text-align: center;
   background-color: var(--accent);
   color: #fff;
@@ -174,7 +174,7 @@ form button:hover{
   bottom: 20px; /* "Floating" effect */
   left: 50%;
   transform: translateX(-50%);
-  width: 90%; /* Responsive width */
+  width: 87%; /* Responsive width */
   max-width: 400px;
   background: var(--surface);
   backdrop-filter: blur(16px);
