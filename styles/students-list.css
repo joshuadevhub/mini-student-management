@@ -94,12 +94,16 @@ body {
   position: relative;
   overflow: hidden;
   margin: 1rem auto;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 1s ease forwards;
+  /* opacity: 0; */
+  /* transform: translateY(20px); */
+  /* animation: fadeInUp 1s ease forwards; */
 }
-@keyframes fadeInUp{
-  to{
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -223,6 +227,7 @@ body {
   margin: 0 auto 10px;
   animation: spin 1s linear infinite;
 }
+
 
 @keyframes spin{
   to{
