@@ -1,5 +1,9 @@
+import { db } from "./firebase.js";
+import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const subjectContainer = document.getElementById("subject-container");
+  // console.log("entered")
 
   // ===============================
   // Dynamically add offered subjects
@@ -239,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let imgSrcValue;
   profilePic.addEventListener("change", (e) => {
     if (e.target.files.length === 0) {
-      setErrorFor(profilePic, "No image selected")
+      setErrorFor(profilePic, "No image selected");
     } else {
       setSuccessFor(profilePic);
       const reader = new FileReader();
@@ -253,12 +257,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===============================
   // Submit
   // ===============================
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const isFirstNameValid = validateNotEmpty(firstName, "First Name is required");
+    const isFirstNameValid = validateNotEmpty(
+      firstName,
+      "First Name is required",
+    );
     const isLastNameValid = validateNotEmpty(lastName, "Last Name is required");
-    const isDepartmentValid = validateNotEmpty(studentDepartment, "Department is required");
+    const isDepartmentValid = validateNotEmpty(
+      studentDepartment,
+      "Department is required",
+    );
     const isPhoneValid = validatePhone(phoneNumber);
     const isEmailValid = email.value.trim() || validateEmail(email);
     const isAddressValid = validateNotEmpty(address, "Address is required");
@@ -292,10 +302,12 @@ document.addEventListener("DOMContentLoaded", () => {
       imgSrc: imgSrcValue,
     };
 
-    const existingStudents = JSON.parse(localStorage.getItem("students")) || [];
-    const studentExist = existingStudents.some(
-      (s) => s.email === student.email || s.phoneNumber === student.phoneNumber,
-    );
+    const querySnapShot = await getDocs(collection(db, "students"));
+    // const existingStudents = JSON.parse(localStorage.getItem("students")) || [];
+    const studentExist = querySnapShot.docs.some(doc => {
+      const s = doc.data();
+      return s.email === student.email || s.phoneNumber === student.phoneNumber
+    });
 
     if (studentExist) {
       showToast("Student already exists", "error");
@@ -306,16 +318,19 @@ document.addEventListener("DOMContentLoaded", () => {
         .querySelectorAll(".form-group")
         .forEach((fc) => fc.classList.remove("error", "success"));
     } else {
-      existingStudents.push(student);
-      localStorage.setItem("students", JSON.stringify(existingStudents));
+      await addDoc(collection(db, "students"), student);
+      // existingStudents.push(student);
+      // localStorage.setItem("students", JSON.stringify(existingStudents));
       showToast("Student registered successfully", "success");
-      console.log(existingStudents);
+      // console.log(existingStudents);
       form.reset();
       imgSrcValue = null;
       Object.keys(touched).forEach((key) => (touched[key] = false));
 
       // clear all classes after reset
-      document.querySelectorAll(".form-group").forEach((fc) => fc.classList.remove("error", "success"));
+      document
+        .querySelectorAll(".form-group")
+        .forEach((fc) => fc.classList.remove("error", "success"));
     }
   });
 });
