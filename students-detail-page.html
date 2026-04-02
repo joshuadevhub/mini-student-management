@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Manager | Detail View</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="styles/student-detail-page.css">
+
+    <script src="scripts/firebase.js" type="module"></script>
+    <script src="scripts/student-detail-page.js" type="module"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <!-- Header -->
+      <header class="header">
+        <img id="student-avatar">
+        <div class="header-meta">
+          <h1 id="student-name"></h1>
+          <p id="student-department"></p>
+        </div>
+      </header>
+
+      <!-- Stats Overview -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Score</span>
+          <span class="stat-value" id="overall-total">--</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Average</span>
+          <span class="stat-value" id="overall-avg">--</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Grade</span>
+          <span class="stat-value" id="overall-grade">--</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Status</span>
+          <span class="stat-value" id="overall-status">--</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">Enrolled Subjects</h2>
+
+      <!-- Subjects Container -->
+      <div id="subjects-container">
+        <!-- Subject Card 1 -->
+        <!-- <div class="subject-card">
+
+        </div> -->
+
+        <!-- Subject Card 2 -->
+        <!-- <div class="subject-card">
+          <div class="card-header">
+            <span class="subject-name">Database Management</span>
+            <span class="badge" id="passfail-db" style="color: var(--success)"
+              >PASSED</span
+            >
+          </div>
+
+          <div class="card-content">
+            <div class="card-grid-desktop">
+              <div class="input-section">
+                <div class="field-group">
+                  <label>Note</label>
+                  <input type="number" class="note-score" value="10">
+                </div>
+                <div class="field-group">
+                  <label>Test</label>
+                  <input type="number" class="test-score" value="30">
+                </div>
+                <div class="field-group">
+                  <label>Exam</label>
+                  <input type="number" class="exam-score" value="60">
+                </div>
+              </div>
+
+              <div class="results-well">
+                <div class="res-box">
+                  <span class="res-label">Final</span>
+                  <span class="res-data" id="total-db">83</span>
+                </div>
+                <div class="res-box">
+                  <span class="res-label">Percent</span>
+                  <span class="res-data" id="percent-db">83%</span>
+                </div>
+                <div class="res-box">
+                  <span class="res-label">Grade</span>
+                  <span class="res-data" id="grade-db" style="color: var(--success)">A</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="comment-box">
+              <label>Instructor Remarks</label>
+              <textarea id="comment-db">Great grasp of normalization forms.</textarea>
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+
+    <!-- Fixed Footer -->
+    <div class="footer-actions">
+      <button id="save-scores-btn">Save / Update Scores</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </body>
+</html>
