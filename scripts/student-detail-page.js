@@ -98,6 +98,58 @@ document.addEventListener("DOMContentLoaded", async () => {
     gradeElement.textContent = grade;
   }
 
+  function calculateOverallResults(subjects) {
+    let totalScore = 0;
+    let subjectCount = subjects.length;
+
+    subjects.forEach((subject) => {
+      const key = subject.toLowerCase().replace(/\s+/g, "-");
+      const note =
+        parseFloat(document.getElementById(`note-${key}`).value) || 0;
+      const test =
+        parseFloat(document.getElementById(`test-${key}`).value) || 0;
+      const exam =
+        parseFloat(document.getElementById(`exam-${key}`).value) || 0;
+
+      totalScore += note + test + exam;
+    });
+
+    // Calculate average per subject
+    const average = totalScore / subjectCount;
+
+    // Determine total grade
+    let totalGrade = "-";
+    if (average >= 70) totalGrade = "A";
+    else if (average >= 60) totalGrade = "B";
+    else if (average >= 50) totalGrade = "C";
+    else if (average >= 40) totalGrade = "D";
+    else totalGrade = "F";
+
+    // Determine overall status
+    const totalStatus = ["A", "B", "C"].includes(totalGrade)
+      ? "PASSED"
+      : "FAILED";
+
+    // Update HTML elements
+    document.getElementById("overall-total").textContent = totalScore;
+    document.getElementById("overall-avg").textContent = average.toFixed(1);
+    document.getElementById("overall-grade").textContent = totalGrade;
+    document.getElementById("overall-status").textContent = totalStatus;
+
+    // Optional color coding
+    const gradeEl = document.getElementById("overall-grade");
+    const statusEl = document.getElementById("overall-status");
+    gradeEl.style.color =
+      totalGrade === "F"
+        ? "#ef4444"
+        : totalGrade === "A"
+          ? "#10b981"
+          : "orange";
+    statusEl.style.color = totalStatus === "FAILED" ? "#ef4444" : "#10b981";
+
+    return { totalScore, average, totalGrade, totalStatus };
+  }
+
   async function saveAllResults(studentId, subjects) {
     const saveBtn = document.getElementById("save-scores-btn");
     saveBtn.textContent = "Saving...";
@@ -137,6 +189,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
       });
 
+      // Compute overall total
+      const overall = calculateOverallResults(subjects);
+      updates["overallResults"] = {
+        totalScore: overall.totalScore,
+        average: overall.average,
+        grade: overall.totalGrade,
+        status: overall.totalStatus,
+      };
+
       await updateDoc(studentRef, updates);
       showToast("Saved successfully", "success");
     } catch (error) {
@@ -165,6 +226,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!studentSnap.exists()) return console.log("Student not Found");
 
   const student = studentSnap.data();
+
+  const overall = student.overallResults;
+
+  if (overall) {
+    document.getElementById("overall-total").textContent =
+      overall.totalScore ?? 0;
+    document.getElementById("overall-avg").textContent =
+      overall.average?.toFixed(1) ?? "0";
+    document.getElementById("overall-grade").textContent = overall.grade ?? "-";
+    document.getElementById("overall-status").textContent =
+      overall.status ?? "PENDING";
+
+    // Optional color styling
+    const gradeEl = document.getElementById("overall-grade");
+    const statusEl = document.getElementById("overall-status");
+
+    if (overall.grade === "A") gradeEl.style.color = "#10b981";
+    else if (overall.grade === "F") gradeEl.style.color = "#ef4444";
+    else gradeEl.style.color = "orange";
+
+    statusEl.style.color = overall.status === "FAILED" ? "#ef4444" : "#10b981";
+  }
 
   studentProfilePic.setAttribute("src", `${student.imgSrc}`);
   studentProfilePic.setAttribute("alt", `${student.firstName} Image`);
@@ -226,12 +309,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     ["note", "test", "exam"].forEach((type) => {
-      document
-        .getElementById(`${type}-${subjectKey}`)
-        .addEventListener("input", () => calculateScore(subjectKey));
+      document.getElementById(`${type}-${subjectKey}`).addEventListener("input", () => {
+        calculateScore(subjectKey);
+        calculateOverallResults(student.subjects);
+      });
     });
   });
 
+  calculateOverallResults(student.subjects);
   // ================= Admin check =================
   onAuthStateChanged(auth, (user) => {
     if (user && user.email === adminEmail) {
