@@ -3,6 +3,13 @@ import { collection, onSnapshot} from "https://www.gstatic.com/firebasejs/12.11.
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  function capitalizeWord(str) {
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   const cardContainer = document.querySelector("#card-container");
   const emptyState = document.getElementById("empty-state");
   const loadingState = document.getElementById("loading-state");
@@ -56,8 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="card-header">
               <img src="${student.imgSrc}" alt="Student Profile" class="avatar">
               <div class="header-info">
-                <h3>${student.firstName} ${student.lastName}</h3>
-                <p class="dept">${student.studentDepartment} Department • Ss 1</p>
+                <h3>${capitalizeWord(student.firstName)} ${capitalizeWord(student.lastName)}</h3>
+                <p class="dept">${capitalizeWord(student.studentDepartment)} Department • Ss 1</p>
               </div>
             </div>
 
@@ -75,10 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <!-- Bottom Section (Tags) -->
             <div class="card-footer">
-              ${student.subjects
-                .slice(0, 3)
-                .map((sub) => `<span class="subject-tag">${sub}</span>`)
-                .join("")}
+              ${capitalizeWord(
+                student.subjects
+                  .slice(0, 3)
+                  .map((sub) => `<span class="subject-tag">${sub}</span>`)
+                  .join(""),
+              )}
             </div>
           `;
 

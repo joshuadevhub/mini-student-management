@@ -78,7 +78,7 @@ body {
   justify-content: center;
   align-items: center;
   flex: 1;
-  padding: 20px;
+  padding: 24px;
 }
 
 .container{
@@ -107,7 +107,7 @@ form .form-group{
   margin-bottom: 1.5rem;
 }
 .form-group label{
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   margin-bottom: 0.4rem;
   display: block;
   font-weight: 600;
@@ -115,8 +115,8 @@ form .form-group{
 }
 .form-group input, .form-group select, .form-group textarea{
   width: 100%;
-  padding: 8.5px;
-  font-size: 1.1rem;
+  padding: 9px;
+  font-size: 0.9rem;
   border-radius: 10px;
   border: 1px solid var(--glass-border);
   transition: border 0.5s ease-in-out;
@@ -174,13 +174,13 @@ form button:hover{
   bottom: 20px; /* "Floating" effect */
   left: 50%;
   transform: translateX(-50%);
-  width: 87%; /* Responsive width */
+  width: 86%; /* Responsive width */
   max-width: 400px;
   background: var(--surface);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   border-radius: 24px; /* Highly rounded corners */
-  padding: 12px 10px;
+  padding: 6px 10px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 
               0 0 15px rgba(99, 102, 241, 0.1); /* Subtle blue glow */
   z-index: 1000;
@@ -204,11 +204,11 @@ form button:hover{
 }
 
 .nav-item i {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .nav-item span {
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 500;
 }
 
