@@ -1,13 +1,37 @@
-import { doc, getDoc, updateDoc} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-import { db } from "./firebase.js";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { db, auth } from "./firebase.js"; // Make sure you export auth from firebase.js
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Reuseable Functions
+  // ================= Reusable Functions =================
   function capitalizeWord(str) {
     return str
       .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
+  }
+
+  function showErrorFor(input) {
+    const formControl = input.parentElement;
+    formControl.classList.add("error");
+    formControl.classList.remove("success");
+  }
+
+  function showSuccessFor(input) {
+    const formControl = input.parentElement;
+    formControl.classList.remove("error");
+    formControl.classList.remove("success");
+  }
+
+  function showToast(message, type = "success") {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => toast.classList.remove("show"), 3000);
   }
 
   function calculateScore(subjectKey) {
@@ -15,8 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const testInput = document.getElementById(`test-${subjectKey}`);
     const examInput = document.getElementById(`exam-${subjectKey}`);
     const gradeElement = document.getElementById(`grade-${subjectKey}`);
-    const badgeStatus = document.getElementById(`passfail-${subjectKey}`); 
-
+    const badgeStatus = document.getElementById(`passfail-${subjectKey}`);
 
     const note = parseFloat(noteInput.value) || 0;
     const test = parseFloat(testInput.value) || 0;
@@ -30,7 +53,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       showSuccessFor(noteInput);
     }
-
     if (test > 30) {
       showErrorFor(testInput);
       isValid = false;
@@ -44,34 +66,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       showSuccessFor(examInput);
     }
+    if (!isValid) return;
 
-    if(!isValid) return
-
-    const finalScore = note + test + exam
+    const finalScore = note + test + exam;
     const percentGrade = (finalScore / 100) * 100;
 
     let grade = "-";
+    if (percentGrade >= 70) grade = "A";
+    else if (percentGrade >= 60) grade = "B";
+    else if (percentGrade >= 50) grade = "C";
+    else if (percentGrade >= 40) grade = "D";
+    else grade = "F";
 
-    // State for the percentage
-    if (percentGrade >= 70) {
-      grade = "A";
-    } else if(percentGrade >= 60){
-      grade = "B";
-    }else if (percentGrade >= 50) {
-      grade = "C";
-    }else if (percentGrade >= 40) {
-      grade = "D";
-    } else {
-      grade = "F";
-    }
-
-    // State for the grade
+    // Update grade color
     if (grade === "A") gradeElement.style.color = "#10b981";
     else if (grade === "F") gradeElement.style.color = "#ef4444";
     else gradeElement.style.color = "orange";
 
-    // State for the badge status
-    if (grade === "A" || grade === "B" || grade === "C") {
+    // Update badge status
+    if (["A", "B", "C"].includes(grade)) {
       badgeStatus.textContent = "Passed";
       badgeStatus.style.color = "#10b981";
     } else {
@@ -80,15 +93,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.getElementById(`total-${subjectKey}`).textContent = finalScore;
-    document.getElementById(`percent-${subjectKey}`).textContent = percentGrade.toFixed(1) + "%";
+    document.getElementById(`percent-${subjectKey}`).textContent =
+      percentGrade.toFixed(1) + "%";
     gradeElement.textContent = grade;
   }
 
-
   async function saveAllResults(studentId, subjects) {
     const saveBtn = document.getElementById("save-scores-btn");
-
-    // 🔄 Loading state
     saveBtn.textContent = "Saving...";
     saveBtn.disabled = true;
 
@@ -98,19 +109,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       subjects.forEach((subject) => {
         const subjectKey = subject.toLowerCase().replace(/\s+/g, "-");
+        const note =
+          parseFloat(document.getElementById(`note-${subjectKey}`).value) || 0;
+        const test =
+          parseFloat(document.getElementById(`test-${subjectKey}`).value) || 0;
+        const exam =
+          parseFloat(document.getElementById(`exam-${subjectKey}`).value) || 0;
 
-        const noteInput = document.getElementById(`note-${subjectKey}`);
-        const testInput = document.getElementById(`test-${subjectKey}`);
-        const examInput = document.getElementById(`exam-${subjectKey}`);
-
-        if (!noteInput.value && !testInput.value && !examInput.value) return;
-
-        const note = parseFloat(noteInput.value) || 0;
-        const test = parseFloat(testInput.value) || 0;
-        const exam = parseFloat(examInput.value) || 0;
+        if (!note && !test && !exam) return;
 
         const total = note + test + exam;
-
         let grade = "F";
         if (total >= 70) grade = "A";
         else if (total >= 60) grade = "B";
@@ -130,88 +138,53 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       await updateDoc(studentRef, updates);
-
-      // ✅ Success feedback
       showToast("Saved successfully", "success");
     } catch (error) {
       console.error(error);
       showToast("Failed to save. Try again", "error");
     } finally {
-      // 🔄 Reset button
       saveBtn.textContent = "Save Results";
       saveBtn.disabled = false;
     }
   }
 
-
-  function showToast(message, type = "success") {
-    const toast = document.getElementById("toast");
-
-    toast.textContent = message;
-    toast.className = `toast show ${type}`;
-
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 3000);
-  }
-
-
-  function showErrorFor(input) {
-    const formControl = input.parentElement;
-    formControl.classList.add("error");
-    formControl.classList.remove("success");
-  }
-
-  function showSuccessFor(input) {
-    const formControl = input.parentElement;
-    formControl.classList.remove("success");
-    formControl.classList.remove("error");
-  }
-
-  // Variables
+  // ================= Variables =================
   const studentProfilePic = document.querySelector("#student-avatar");
   const studentName = document.querySelector("#student-name");
   const studentDepartment = document.querySelector("#student-department");
   const subjectContainer = document.querySelector("#subjects-container");
-
+  const saveButton = document.getElementById("save-scores-btn");
   const param = new URLSearchParams(window.location.search);
   const studentId = param.get("id");
+  const adminEmail = "elemide.j.dev@gmail.com"; // <-- replace with your admin email
 
-  // console.log("Student ID:", studentId);
-
+  // ================= Load student data =================
   const studentRef = doc(db, "students", studentId);
   const studentSnap = await getDoc(studentRef);
 
-  if (studentSnap.exists()) {
-    const student = studentSnap.data();
-    console.log(student);
+  if (!studentSnap.exists()) return console.log("Student not Found");
 
-    // Populate Student Details
-    studentProfilePic.setAttribute("src", `${student.imgSrc}`);
-    studentProfilePic.setAttribute("alt", `${student.firstName} Image`);
+  const student = studentSnap.data();
 
-    studentName.textContent = capitalizeWord(student.firstName + " " + student.lastName);
+  studentProfilePic.setAttribute("src", `${student.imgSrc}`);
+  studentProfilePic.setAttribute("alt", `${student.firstName} Image`);
+  studentName.textContent = capitalizeWord(
+    student.firstName + " " + student.lastName,
+  );
+  studentDepartment.textContent = `Department of ${capitalizeWord(student.studentDepartment)}`;
 
-    const capitalizeDepartment = capitalizeWord(student.studentDepartment);
-    studentDepartment.textContent = `Department of ${capitalizeDepartment}`;
+  student.subjects.forEach((subject) => {
+    const subjectCardContainer = document.createElement("div");
+    subjectCardContainer.classList.add("subject-card");
+    const subjectKey = subject.toLowerCase().replace(/\s+/g, "-");
 
-    // Populate the subject data as card
-    student.subjects.forEach((subject) => {
-      const subjectCardContainer = document.createElement("div");
-      subjectCardContainer.classList.add("subject-card");
-
-      // Generate unique ID based on subject name
-      const subjectKey = subject.toLowerCase().replace(/\s+/g, "-");
-
-      subjectCardContainer.innerHTML = `
+    subjectCardContainer.innerHTML = `
       <div class="card-header">
         <span class="subject-name">${capitalizeWord(subject)}</span>
         <span class="badge" id="passfail-${subjectKey}">PENDING</span>
       </div>
-
       <div class="card-content">
         <div class="card-grid-desktop">
-          <!-- Left: Inputs -->
           <div class="input-section">
             <div class="field-group">
               <label>Note (/10)</label>
@@ -226,65 +199,59 @@ document.addEventListener("DOMContentLoaded", async () => {
               <input type="number" class="exam-score" placeholder="0" min="0" max="60" id="exam-${subjectKey}">
             </div>
           </div>
-
-          <!-- Right: Calculated (Layout Shift Proof) -->
           <div class="results-well">
-            <div class="res-box">
-              <span class="res-label">Final</span>
-              <span class="res-data" id="total-${subjectKey}">0</span>
-            </div>
-            <div class="res-box">
-              <span class="res-label">Percent</span>
-              <span class="res-data" id="percent-${subjectKey}">0%</span>
-            </div>
-            <div class="res-box">
-              <span class="res-label">Grade</span>
-              <span class="res-data" id="grade-${subjectKey}" style="color: var(--accent)">-</span>
-            </div>
+            <div class="res-box"><span class="res-label">Final</span><span class="res-data" id="total-${subjectKey}">0</span></div>
+            <div class="res-box"><span class="res-label">Percent</span><span class="res-data" id="percent-${subjectKey}">0%</span></div>
+            <div class="res-box"><span class="res-label">Grade</span><span class="res-data" id="grade-${subjectKey}" style="color: var(--accent)">-</span></div>
           </div>
         </div>
-
-        <!-- Full Width: Comments -->
         <div class="comment-box">
           <label>Instructor Remarks</label>
           <textarea id="comment-${subjectKey}" placeholder="Add a comment..."></textarea>
         </div>
       </div>
-      `;
+    `;
 
-      subjectContainer.appendChild(subjectCardContainer);
-      // console.log(document.querySelector(`#total-${subjectKey}`));
+    subjectContainer.appendChild(subjectCardContainer);
 
-      const results = student.results || {};
+    const results = student.results || {};
+    if (results[subjectKey]) {
+      const data = results[subjectKey];
+      document.getElementById(`note-${subjectKey}`).value = data.note ?? "";
+      document.getElementById(`test-${subjectKey}`).value = data.test ?? "";
+      document.getElementById(`exam-${subjectKey}`).value = data.exam ?? "";
+      document.getElementById(`comment-${subjectKey}`).value =
+        data.comment ?? "";
+      calculateScore(subjectKey);
+    }
 
-      if (results[subjectKey]) {
-        const data = results[subjectKey];
-
-        document.getElementById(`note-${subjectKey}`).value = data.note ?? "";
-        document.getElementById(`test-${subjectKey}`).value = data.test ?? "";
-        document.getElementById(`exam-${subjectKey}`).value = data.exam ?? "";
-        document.getElementById(`comment-${subjectKey}`).value =
-          data.comment ?? "";
-
-        // Recalculate UI (total, grade, percent)
-        calculateScore(subjectKey);
-      }
-
-      // Attach Event Listeners
-      ["note", "test", "exam"].forEach((type) => {
-        document.getElementById(`${type}-${subjectKey}`).addEventListener("input", () => {
-            calculateScore(subjectKey);
-          });
-      });
+    ["note", "test", "exam"].forEach((type) => {
+      document
+        .getElementById(`${type}-${subjectKey}`)
+        .addEventListener("input", () => calculateScore(subjectKey));
     });
+  });
 
-    const saveButton = document.getElementById("save-scores-btn");
-    saveButton.addEventListener("click", () => {
-      saveAllResults(studentId, student.subjects);
-    });
+  // ================= Admin check =================
+  onAuthStateChanged(auth, (user) => {
+    if (user && user.email === adminEmail) {
+      saveButton.style.display = "block";
+      saveButton.addEventListener("click", () =>
+        saveAllResults(studentId, student.subjects),
+      );
+    } else {
+      saveButton.style.display = "none";
+      document
+        .querySelectorAll("input, textarea")
+        .forEach((el) => el.setAttribute("disabled", "true"));
 
-  } else {
-    console.log("Student not Found")
-  }
-
-})
+      const infoMsg = document.createElement("p");
+      infoMsg.textContent =
+        "You can view your scores but cannot edit or save them.";
+      infoMsg.style.color = "gray";
+      infoMsg.style.fontStyle = "italic";
+      infoMsg.style.marginBottom = "1rem";
+      subjectContainer.prepend(infoMsg);
+    }
+  });
+});

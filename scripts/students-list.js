@@ -16,7 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Real-time listener
   onSnapshot(studentsCollection, (snapshot) => {
-    const students = snapshot.docs.map((doc) => doc.data());
+    const students = snapshot.docs.map((doc) => {
+      return {
+        ...doc.data(),
+        id: doc.id,
+      }
+    });
 
     // simulate short loading for smooth UX
     setTimeout(() => {
@@ -34,6 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
           studentCard.setAttribute("role", "button");
           studentCard.setAttribute("tabIndex", 0);
 
+          const studentId = student.id;
+
+          studentCard.addEventListener("click", () => {
+            window.location.href = `students-detail-page.html?id=${studentId}`;
+          });
+          
           // Stagger fade-in animation
           studentCard.style.opacity = 0;
           studentCard.style.transform = "translateY(20px)";
