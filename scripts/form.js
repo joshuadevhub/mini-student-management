@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   listOfSubjects.forEach((subject) => {
     const option = document.createElement("option");
+    option.style.backgroundColor = "#0f172a80";
+    option.style.color = "#0f172a";
     option.value = subject.toLowerCase();
     option.textContent = subject;
     selectElement.appendChild(option);
@@ -58,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const offeredSubject = document.getElementById("offered-subject");
   const address = document.getElementById("address");
   const profilePic = document.getElementById("profile-pic");
+  const genderRadios = document.getElementsByName("gender");
 
   const touched = {}; // track fields touched for live validation
 
@@ -128,6 +131,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setSuccessFor(input);
     return true;
+  }
+
+  function validateGender() {
+    const selected = Array.from(genderRadios).some(radio => radio.checked);
+    const errorMessage = genderRadios[0].closest(".form-group").querySelector(".error-message");
+
+    if (!selected) {
+      if (errorMessage) errorMessage.textContent = "Please select a gender";
+      return false;
+    } else {
+      if (errorMessage) errorMessage.textContent = "";
+      return true;
+    }
   }
 
   function validateSubjects(subject) {
@@ -239,16 +255,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  genderRadios.forEach((radio) => {
+    radio.addEventListener("change", () => validateGender());
+  })
+
   // Get the value of image uploaded
   let imgSrcValue;
   profilePic.addEventListener("change", (e) => {
     if (e.target.files.length === 0) {
       setErrorFor(profilePic, "No image selected");
     } else {
-      setSuccessFor(profilePic);
       const reader = new FileReader();
       reader.onload = (event) => {
         imgSrcValue = event.target.result;
+        setSuccessFor(profilePic);
       };
       reader.readAsDataURL(e.target.files[0]);
     }
@@ -273,15 +293,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const isEmailValid = email.value.trim() || validateEmail(email);
     const isAddressValid = validateNotEmpty(address, "Address is required");
     const isSubjectValid = validateSubjects(offeredSubject);
+    const isGenderValid = validateGender();
 
     const valid =
       isFirstNameValid &&
       isLastNameValid &&
       isDepartmentValid &&
-      // isEmailValid &&
+      isGenderValid &&
       isPhoneValid &&
       isAddressValid &&
-      isSubjectValid;
+      isSubjectValid
+      
 
     if (!valid) return;
     if (!imgSrcValue) {
@@ -300,6 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ),
       address: address.value.trim(),
       imgSrc: imgSrcValue,
+      gender: Array.from(genderRadios).find(radio => radio.checked)?.value,
     };
 
     const querySnapShot = await getDocs(collection(db, "students"));
@@ -318,11 +341,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .querySelectorAll(".form-group")
         .forEach((fc) => fc.classList.remove("error", "success"));
     } else {
+      console.log(student)
       await addDoc(collection(db, "students"), student);
-      // existingStudents.push(student);
-      // localStorage.setItem("students", JSON.stringify(existingStudents));
       showToast("Student registered successfully", "success");
-      // console.log(existingStudents);
       form.reset();
       imgSrcValue = null;
       Object.keys(touched).forEach((key) => (touched[key] = false));
