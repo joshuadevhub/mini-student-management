@@ -215,6 +215,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const studentDepartment = document.querySelector("#student-department");
   const subjectContainer = document.querySelector("#subjects-container");
   const saveButton = document.getElementById("save-scores-btn");
+  const finalizeButton = document.getElementById("finalize-scores-btn");
   const param = new URLSearchParams(window.location.search);
   const studentId = param.get("id");
   const adminEmail = "elemide.j.dev@gmail.com"; // <-- replace with your admin email
@@ -317,26 +318,65 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   calculateOverallResults(student.subjects);
+
   // ================= Admin check =================
   onAuthStateChanged(auth, (user) => {
     if (user && user.email === adminEmail) {
+      // Admin View
       saveButton.style.display = "block";
+      finalizeButton.style.display = "block";
       saveButton.addEventListener("click", () =>
         saveAllResults(studentId, student.subjects),
       );
+
+      finalizeButton.addEventListener("click", async () => {
+        finalizeButton.textContent = "Finalizing...";
+        finalizeButton.disabled = true;
+
+        try {
+          const studentsSnap = await getDocs(collection(db, "students"));
+          const batchUpdates = [];
+          studentsSnap.forEach((docSnap) => {
+            const studentRef = doc(db, "students", docSnap.id);
+            batchUpdates.push(updateDoc(studentRef, { scoresFinalized: true }));
+          });
+          await Promise.all(batchUpdates);
+          showToast("All scores finalized!", "success");
+        } catch (error) {
+          console.error(error);
+          showToast("Failed to Finalize, Try Again", "error");
+        } finally {
+          finalizeButton.textContent = "Finalize All Scores";
+          finalizeButton.disabled = false;
+        }
+      });
     } else {
+      // Student View
+
       saveButton.style.display = "none";
+      finalizeButton.style.display = "none";
+
+      const allInput = document.querySelectorAll("input, textarea");
+      allInput.forEach(el => el.setAttribute("disabled", "true"));
       document
         .querySelectorAll("input, textarea")
         .forEach((el) => el.setAttribute("disabled", "true"));
 
-      const infoMsg = document.createElement("p");
-      infoMsg.textContent =
-        "You can view your scores but cannot edit or save them.";
-      infoMsg.style.color = "gray";
-      infoMsg.style.fontStyle = "italic";
-      infoMsg.style.marginBottom = "1rem";
-      subjectContainer.prepend(infoMsg);
+      if (!student.scoresFinalized) {
+        const infoMsg = document.createElement("p");
+        infoMsg.textContent = "Scores are not ready yet. Please check back later";
+        infoMsg.style.color = "gray";
+        infoMsg.style.fontStyle = "italic";
+        infoMsg.style.marginBottom = "1rem";
+        subjectContainer.prepend(infoMsg);
+      } else {
+        const infoMsg = document.createElement("p");
+        infoMsg.textContent = "You can view your scores below but cannot edit or save them.";
+        infoMsg.style.color = "gray";
+        infoMsg.style.fontStyle = "italic";
+        infoMsg.style.marginBottom = "1rem";
+        subjectContainer.prepend(infoMsg);
+      }
     }
   });
 });
