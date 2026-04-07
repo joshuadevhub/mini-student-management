@@ -323,6 +323,8 @@ document.addEventListener("DOMContentLoaded", () => {
       address: address.value.trim(),
       imgSrc: imgSrcValue,
       gender: Array.from(genderRadios).find(radio => radio.checked)?.value,
+      scoreFinalized: false,
+      createdAt: new Date(),
     };
 
     const querySnapShot = await getDocs(collection(db, "students"));
