@@ -1,16 +1,14 @@
 :root {
-  --bg-dark: #0f172a;
-  --surface: #1e293bb3;
+  --bg-color: #0f172a;
+  --card-bg: rgba(30, 41, 59, 0.7);
   --accent: #6366f1;
   --accent-hover: #4f46e5;
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --input-bg: #0f172a80;
-  --radius: 12px;
-}
-.error-message{
-  color:#ef4444;
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --input-bg: rgba(15, 23, 42, 0.5);
+  --radius: 24px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -21,324 +19,232 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--bg-dark);
-  background-image: 
-      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.1) 0px, transparent 50%);
+  background-color: var(--bg-color);
   color: var(--text-primary);
-  line-height: 1.6;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  line-height: 1.5;
 }
 
-/* --- Header Styles --- */
-.app-header {
+/* Background Abstract Shapes */
+.bg-glow-1, .bg-glow-2 {
   position: fixed;
-  top: 0;
-  width: 100%;
-  height: 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(12px); /* Modern frosted glass */
-  border-bottom: 1px solid var(--glass-border);
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+  z-index: -1;
+  filter: blur(60px);
 }
 
-.logo {
+.bg-glow-1 { top: -100px; left: -100px; }
+.bg-glow-2 { bottom: -100px; right: -100px; }
+
+/* Responsive Container */
+.login-container {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Glassmorphism Card */
+.login-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header Styles */
+.logo-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo-wrapper {
+  background: var(--accent);
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: -0.5px;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
 }
 
 .logo-icon {
-  width: 24px;
-  height: 24px;
-  background: linear-gradient(135deg, var(--accent), #8b5cf6);
-  border-radius: 6px;
+  color: white;
+  width: 28px;
+  height: 28px;
 }
 
-.menu-btn {
-  background: none;
-  border: none;
-  color: var(--text-primary);
+h1 {
   font-size: 24px;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-
-.menu-btn:active {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* --- Main Layout --- */
-main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 1rem 1rem 4rem 1rem;
-}
-
-.container {
-  width: 100%;
-  max-width: 800px;
-  background: var(--surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 2.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  margin: 4rem 0 2rem 0;
-}
-
-/* --- Form Elements --- */
-fieldset {
-  border: none;
-  margin-bottom: 2.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-legend {
-  grid-column: span 2;
-  font-size: 1.25rem;
   font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--glass-border);
-  width: 100%;
+  margin-bottom: 8px;
 }
 
-.form-group {
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Form Styles */
+.login-form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 20px;
 }
 
-.form-group.full-width {
-  grid-column: span 2;
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 label {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+  font-size: 13px;
   font-weight: 500;
+  color: var(--text-secondary);
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-select,
-textarea {
-  background: var(--input-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  padding: 0.8rem 1rem;
+.forgot-link {
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.forgot-link:hover {
   color: var(--text-primary);
-  font-family: inherit;
-  transition: all 0.3s ease;
-  outline: none;
 }
 
-input:focus, select:focus, textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
-}
-
-/* --- Custom Radio & Checkbox Styling --- */
-.radio-group, .checkbox-grid {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  padding-top: 0.5rem;
-}
-
-.radio-item, .checkbox-item {
+.input-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
 }
 
-input[type="radio"], input[type="checkbox"] {
-  accent-color: var(--accent);
-  width: 1.1rem;
-  height: 1.1rem;
+.field-icon {
+  position: absolute;
+  left: 16px;
+  width: 18px;
+  height: 18px;
+  color: var(--text-secondary);
 }
 
-.checkbox-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 15px;
+  transition: var(--transition);
 }
 
-/* --- File Upload --- */
-input[type="file"]::file-selector-button {
-  background: var(--accent);
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
   border: none;
-  border-radius: 8px;
-  color: white;
-  padding: 0.5rem 1rem;
-  margin-right: 1rem;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: 0.3s;
-}
-.subject-container select{
-  color: var(--input-bg);
+  padding: 4px;
 }
 
-input[type="file"]::file-selector-button:hover {
-  background: var(--accent-hover);
-}
-
-/* --- Submit Button --- */
-.submit-btn {
-  /* grid-column: span 2; */
+/* Primary Button */
+.login-btn {
+  margin-top: 10px;
   background: var(--accent);
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: var(--radius);
-  font-size: 1.1rem;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s transform;
-  outline: none;
-  width: 100%;
-  /* margin-top: 1rem; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition);
 }
 
-.submit-btn:hover {
+.login-btn:hover {
   background: var(--accent-hover);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
 }
 
-.submit-btn:active {
+.login-btn:active {
   transform: translateY(0);
 }
 
-/* --- Footer Styles --- */
-.app-footer {
-  position: fixed;
-  bottom: 20px; /* "Floating" effect */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 86%; /* Responsive width */
-  max-width: 400px;
-  background: var(--surface);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px; /* Highly rounded corners */
-  padding: 6px 10px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 
-              0 0 15px rgba(99, 102, 241, 0.1); /* Subtle blue glow */
-  z-index: 1000;
+.btn-icon {
+  width: 18px;
+  height: 18px;
 }
 
-.footer-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: var(--text-secondary);
-  gap: 4px;
-  min-width: 64px; /* Large touch target */
-  transition: all 0.3s ease;
-}
-
-.nav-item i {
-  font-size: 20px;
-}
-
-.nav-item span {
-  font-size: 0.6rem;
-  font-weight: 500;
-}
-
-/* Active State */
-.nav-item.active {
-  color: var(--accent);
-}
-
-.nav-item.active i {
-  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
-}
-.nav-item:hover {
-  color: var(--text-primary);
-  transform: translateY(-2px);
-}
-
-.toast {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  background: var(--surface);
-  color: var(--text-primary);
-  padding: 12px 18px;
-  border-radius: 10px;
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(10px);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
-  z-index: 2000;
-  width: 90%;
+/* Footer */
+.login-footer {
+  margin-top: 32px;
   text-align: center;
 }
 
-/* show */
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+.login-footer p {
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 
-/* success */
-.toast.success {
-  border-color: rgba(34, 197, 94, 0.4);
-}
-
-/* error */
-.toast.error {
-  border-color: rgba(248, 113, 113, 0.4);
-}
-
-/* --- Responsive Design --- */
-@media (max-width: 768px) {
-  header h1 { font-size: 2rem; }
+/* Mobile Responsiveness (Full screen on small devices) */
+@media (max-width: 480px) {
+  .login-container {
+      padding: 0;
+      height: 100vh;
+  }
   
-  .container {
-      padding: 1.5rem;
+  .login-card {
+      max-width: 100%;
+      height: 100%;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: none;
   }
 
-  fieldset {
-      grid-template-columns: 1fr;
-  }
-
-  .form-group.full-width, legend {
-      grid-column: span 1;
-  }
-
-  .checkbox-grid {
-      grid-template-columns: 1fr 1fr;
+  .bg-glow-1, .bg-glow-2 {
+      display: none;
   }
 }
