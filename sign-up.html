@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Sign-Up | Portal</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script src="scripts/firebase.js" type="module"></script>
+    <script src="scripts/sign-up.js" type="module"></script>
+
+    <link rel="stylesheet" href="styles/sign-up.css">
+</head>
+<body>
+
+    <div class="container">
+        <main class="signup-card">
+            <header class="card-header">
+                <h1>Student Sign-Up</h1>
+                <p>Create your account to access your profile.</p>
+            </header>
+
+            <form id="signup-form">
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="input-icon"></i>
+                        <input type="email" id="email" placeholder="email@university.edu">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" id="password" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="submit-btn">
+                    Create Account
+                </button>
+            </form>
+
+            <span class="error-msg" id="error-msg"></span>
+
+            <footer class="card-footer">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <span id="toast-message">Account created successfully!</span>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Simple Toast Trigger Example (For demonstration)
+        // const form = document.getElementById('signup-form');
+        // const toast = document.getElementById('toast');
+
+        // form.addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     toast.classList.add('show');
+        //     setTimeout(() => toast.classList.remove('show'), 3000);
+        // });
+    </script>
+</body>
+</html>
