@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Portal</title>
+  
+    <meta name="description" content="Register students using our student management system. Fill out the form to create a student profile and manage academic records efficiently.">
+    <meta name="author" content="Elemide Joshua Damilare">
+  
+  
+    <!-- Open Graph -->
+    <meta property="og:title" content="Student Registration Portal">
+    <meta property="og:description" content="Register students and create academic profiles with ease using our modern student management system.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://joshuadevhub.github.io/mini-student-management/profile-completion-page.html">
+    <meta property="og:image" content="https://joshuadevhub.github.io/mini-student-management/images/og-image.png">
+  
+    <!-- Favicons -->
+    <!-- Standard favicon -->
+    <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
+    <!-- PNG formats -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <!-- Apple iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <!-- Android Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
+  
+  
+    <!-- Links and Scripts -->
+    <script src="scripts/firebase.js" type="module"></script>
+    <script src="scripts/profile-completion-page.js" type="module"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="styles/profile-completion-page.css">
+
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span>Student Manager</span>
+        </div>
+        <button class="menu-btn" aria-label="Open Menu">
+            <i class="ph ph-list"></i>
+        </button>
+    </header>
+
+    <main>
+      <div class="container">
+        <form id="student-form">
+          <!-- Personal Information -->
+          <fieldset>
+            <legend>Personal Information</legend>
+
+            <div class="form-group">
+              <label for="first-name">First Name *</label>
+              <input
+                type="text"
+                id="first-name"
+                name="fname"
+                placeholder="John"
+              />
+              <p class="error-message"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="last-name">Last Name</label>
+              <input
+                type="text"
+                id="last-name"
+                name="lname"
+                placeholder="Doe"
+              />
+              <p class="error-message"></p>
+            </div>
+
+            <div class="form-group">
+              <label for="middle-name">Other Name (Optional)</label>
+              <input
+                type="text"
+                id="middle-name"
+                name="oname"
+                placeholder="Middle Name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Gender</label>
+
+              <div class="radio-group">
+                <label class="radio-item">
+                  <input type="radio" name="gender" value="male">
+                  Male
+                </label>
+
+                <label class="radio-item">
+                  <input type="radio" name="gender" value="female"> Female
+                </label>
+
+                <label class="radio-item">
+                  <input type="radio" name="gender" value="other"> Other
+                </label>
+              </div>
+              <p class="error-message"></p>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="profile-pic">Upload Passport Photo</label>
+              <input type="file" id="profile-pic" name="photo" accept="image/*">
+              <p class="error-message"></p>
+            </div>
+          </fieldset>
+
+          <!-- Contact Information -->
+          <fieldset>
+            <legend>Contact Information</legend>
+
+            <div class="form-group">
+              <label for="phone-number">Phone Number</label>
+              <input
+                type="tel"
+                id="phone-number"
+                name="phone"
+                placeholder="+234 (555) 000-0000"
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="address">Residential Address</label>
+              <textarea
+                id="address"
+                name="address"
+                rows="3"
+                placeholder="Enter your full street address..."
+              ></textarea>
+              <p class="error-message"></p>
+            </div>
+          </fieldset>
+
+          <!-- Academic Information -->
+          <fieldset>
+            <legend>Academic Information</legend>
+
+            <div class="form-group full-width">
+              <label for="departments">Department / Class</label>
+              <select id="departments">
+                <option value="" disabled selected>Select your department</option>
+                <option value="science">Science & Technology</option>
+                <option value="art">Arts & Humanities</option>
+                <option value="commercial">Commercial</option>
+              </select>
+              <p class="error-message"></p>
+            </div>
+
+            <div class="form-group full-width" id="subject-container">
+              <label for="offered-subject">Subject Offered *</label>
+              <!-- <div class="subject-container" id="subject-container">
+              </div> -->
+              <!-- <p class="error-message"></p> -->
+            </div>
+
+          </fieldset>
+
+          <button type="submit" class="submit-btn">Complete Registration</button>
+
+        </form>
+      </div>
+    </main>
+
+    <!-- Floating Mobile Footer -->
+    <footer class="app-footer">
+        <nav class="footer-nav">
+            <a href="index.html" class="nav-item active">
+                <i class="ph ph-house-simple"></i>
+                <span>Home</span>
+            </a>
+            <a href="students-list.html" class="nav-item">
+                <i class="ph ph-users"></i>
+                <span>Students</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="ph ph-chart-bar"></i>
+                <span>Reports</span>
+            </a>
+            <a href="login.html" class="nav-item">
+                <i class="ph ph-shield-check"></i>
+                <span>Log In</span>
+            </a>
+        </nav>
+    </footer>
+
+    <div id="toast"></div>
+  </body>
+</html>
