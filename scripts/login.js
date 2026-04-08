@@ -13,8 +13,20 @@ loginForm.addEventListener("submit", async (event) => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
+  // -----------------
+  // Basic validation
+  // -----------------
+  if (!email || !password) {
+    errorMsg.textContent = "Please enter both email and password.";
+    return;
+  }
+
   try {
-    const userCredentials = await signInWithEmailAndPassword( auth, email, password);
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
     const user = userCredentials.user;
 
     // -----------------
@@ -53,6 +65,28 @@ loginForm.addEventListener("submit", async (event) => {
     }
   } catch (error) {
     console.error(error);
-    errorMsg.textContent = "Login failed: " + error.message;
+
+    // -----------------
+    // Friendly error messages
+    // -----------------
+    switch (error.code) {
+      case "auth/invalid-email":
+        errorMsg.textContent = "The email address is invalid.";
+        break;
+      case "auth/user-disabled":
+        errorMsg.textContent =
+          "This account has been disabled. Contact support.";
+        break;
+      case "auth/user-not-found":
+        errorMsg.textContent =
+          "No account found with this email. Please sign up.";
+        break;
+      case "auth/wrong-password":
+        errorMsg.textContent = "Incorrect password. Please try again.";
+        break;
+      default:
+        errorMsg.textContent = "Login failed. Please try again later.";
+        break;
+    }
   }
 });
