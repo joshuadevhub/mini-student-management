@@ -5,6 +5,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 import { db, auth } from "./firebase.js"; // Make sure you export auth from firebase.js
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+import {
+  collection,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   // ================= Reusable Functions =================
@@ -228,6 +232,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const student = studentSnap.data();
 
+  if (!student.firstName || !student.lastName || !student.subjects) {
+    // Redirect to profile completion if missing key info
+    window.location.href = `complete-profile.html?uid=${studentId}`;
+    return;
+  }
+
   const overall = student.overallResults;
 
   if (overall) {
@@ -358,9 +368,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const allInput = document.querySelectorAll("input, textarea");
       allInput.forEach(el => el.setAttribute("disabled", "true"));
-      document
-        .querySelectorAll("input, textarea")
-        .forEach((el) => el.setAttribute("disabled", "true"));
 
       if (!student.scoresFinalized) {
         const infoMsg = document.createElement("p");
