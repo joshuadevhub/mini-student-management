@@ -1,23 +1,23 @@
 <!doctype html>
 <html lang="en">
-  
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Registration Portal</title>
-  
-    <meta name="description" content="Register students using our student management system. Fill out the form to create a student profile and manage academic records efficiently.">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A.G.E.S Academy | Modern School for Excellence</title>
+
+    <meta name="description" content="A.G.E.S is a forward-thinking school dedicated to quality education, innovation, and preparing students for real-world success.">
+    <meta name="keywords" content="School, Education, Technology, Arts, Science, Smart Campus, Mentors, Global Network">
     <meta name="author" content="Elemide Joshua Damilare">
-  
-  
-    <!-- Open Graph -->
-    <meta property="og:title" content="Student Registration Portal">
-    <meta property="og:description" content="Register students and create academic profiles with ease using our modern student management system.">
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:title" content="A.G.E.S Academy| Modern School for Excellence">
+    <meta property="og:description" content="A.G.E.S is a forward-thinking school dedicated to quality education, innovation, and preparing students for real-world success.">
     <meta property="og:url" content="https://joshuadevhub.github.io/mini-student-management/index.html">
     <meta property="og:image" content="https://joshuadevhub.github.io/mini-student-management/images/og-image.png">
-  
-    <!-- Favicons -->
+    <meta property="og:site_name" content="A.G.E.S School">
+
+
     <!-- Standard favicon -->
     <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
     <!-- PNG formats -->
@@ -28,183 +28,250 @@
     <!-- Android Chrome -->
     <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
-  
-  
-    <!-- Links and Scripts -->
-    <script src="scripts/firebase.js" type="module"></script>
-    <script src="scripts/form.js" type="module"></script>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <link rel="stylesheet" href="styles/login.css">
-
+    <!-- Scripts and Links -->
+    <link rel="stylesheet" href="styles/index.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
 
   <body>
-    <!-- Header -->
-    <header class="app-header">
-        <div class="logo">
-            <div class="logo-icon"></div>
-            <span>Student Manager</span>
+    <!-- Navbar -->
+    <nav id="navbar">
+      <div class="nav-container">
+        <div class="logo">AGES ACADEMY</div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#programs">Programs</a>
+          <a href="#why">Benefits</a>
+          <a href="#apply" class="btn btn-primary">Apply Now</a>
         </div>
-        <button class="menu-btn" aria-label="Open Menu">
-            <i class="ph ph-list"></i>
-        </button>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero section-padding">
+      <div class="hero-content reveal">
+        <h1>
+          Engineered for <br /><span style="color: var(--accent)"
+            >Tomorrow's Leaders</span
+          >
+        </h1>
+        <p>
+          Empowering students with cutting-edge technology, creative arts, and
+          scientific mastery in a futuristic learning environment.
+        </p>
+        <div class="hero-btns">
+          <a href="#apply" class="btn btn-primary">Apply Now</a>
+          <a href="sign-up.html" class="btn btn-secondary">Sign In</a>
+        </div>
+      </div>
     </header>
 
-    <main>
-      <div class="container">
-        <form id="student-form">
-          <!-- Personal Information -->
-          <fieldset>
-            <legend>Personal Information</legend>
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+      <h2>Our Impacts by the Numbers</h2>
+      <p>A.G.E.S is a forward-thinking institution dedicated to providing quality education and preparing students for real-world success.</p>
 
-            <div class="form-group">
-              <label for="first-name">First Name *</label>
-              <input
-                type="text"
-                id="first-name"
-                name="fname"
-                placeholder="John"
-              />
-              <p class="error-message"></p>
-            </div>
+      <div class="about-card-container grid">
+        <div class="about-card glass reveal">
+          <h3>Our Mission</h3>
+          <p>At AGES Academy, we believe the future belongs to the curious. Our mission is to deliver innovative and technology-driven education that empowers students with practical skills, and the confidence to thrive in the digital age.</p>
+        </div>
 
-            <div class="form-group">
-              <label for="last-name">Last Name</label>
-              <input
-                type="text"
-                id="last-name"
-                name="lname"
-                placeholder="Doe"
-              />
-              <p class="error-message"></p>
-            </div>
+        <div class="about-card glass reveal">
+          <h3>Our Vision</h3>
+          <p>At AGES Academy, we believe the future belongs to the curious. Our Vision is to become a center of excellence in modern education, shaping future leaders and innovators who will impact the world positively.</p>
+        </div>
 
-            <div class="form-group">
-              <label for="middle-name">Other Name (Optional)</label>
-              <input
-                type="text"
-                id="middle-name"
-                name="oname"
-                placeholder="Middle Name"
-              />
-            </div>
+        <div class="about-card glass reveal">
+          <h3>Core Values</h3>
+          <div class="core-values">
 
-            <div class="form-group">
-              <label>Gender</label>
-
-              <div class="radio-group">
-                <label class="radio-item">
-                  <input type="radio" name="gender" value="male">
-                  Male
-                </label>
-
-                <label class="radio-item">
-                  <input type="radio" name="gender" value="female"> Female
-                </label>
-
-                <label class="radio-item">
-                  <input type="radio" name="gender" value="other"> Other
-                </label>
+            <div class="value-card">
+              <div class="icon-value">
+                <i data-lucide="trophy" color="#6366f1"></i>
+                <h3>Excellence</h3>
               </div>
-              <p class="error-message"></p>
+              <span>Striving for the highest standards in academics and character.</span>
             </div>
 
-            <div class="form-group full-width">
-              <label for="profile-pic">Upload Passport Photo</label>
-              <input type="file" id="profile-pic" name="photo" accept="image/*">
-              <p class="error-message"></p>
+            <div class="value-card">
+              <div class="icon-value">
+                <i data-lucide="shield-check" color="#6366f1"></i>
+                <h3>Integrity</h3>
+              </div>
+              <span>Acting with honesty and strong moral principles.</span>
             </div>
-          </fieldset>
-
-          <!-- Contact Information -->
-          <fieldset>
-            <legend>Contact Information</legend>
-
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="john@example.com"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="phone-number">Phone Number</label>
-              <input
-                type="tel"
-                id="phone-number"
-                name="phone"
-                placeholder="+234 (555) 000-0000"
-              />
-            </div>
-
-            <div class="form-group full-width">
-              <label for="address">Residential Address</label>
-              <textarea
-                id="address"
-                name="address"
-                rows="3"
-                placeholder="Enter your full street address..."
-              ></textarea>
-              <p class="error-message"></p>
-            </div>
-          </fieldset>
-
-          <!-- Academic Information -->
-          <fieldset>
-            <legend>Academic Information</legend>
-
-            <div class="form-group full-width">
-              <label for="departments">Department / Class</label>
-              <select id="departments">
-                <option value="" disabled selected>Select your department</option>
-                <option value="science">Science & Technology</option>
-                <option value="art">Arts & Humanities</option>
-                <option value="commercial">Commercial</option>
-              </select>
-              <p class="error-message"></p>
-            </div>
-
-            <div class="form-group full-width" id="subject-container">
-              <label for="offered-subject">Subject Offered *</label>
-              <!-- <div class="subject-container" id="subject-container">
-              </div> -->
-              <!-- <p class="error-message"></p> -->
-            </div>
-
-          </fieldset>
-
-          <button type="submit" class="submit-btn">Complete Registration</button>
-
-        </form>
+          </div>
+        </div>
       </div>
-    </main>
 
-    <!-- Floating Mobile Footer -->
-    <footer class="app-footer">
-        <nav class="footer-nav">
-            <a href="index.html" class="nav-item active">
-                <i class="ph ph-house-simple"></i>
-                <span>Home</span>
-            </a>
-            <a href="students-list.html" class="nav-item">
-                <i class="ph ph-users"></i>
-                <span>Students</span>
-            </a>
-            <a href="#" class="nav-item">
-                <i class="ph ph-chart-bar"></i>
-                <span>Reports</span>
-            </a>
-            <a href="login.html" class="nav-item">
-                <i class="ph ph-shield-check"></i>
-                <span>Log In</span>
-            </a>
-        </nav>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="section-padding">
+      <h2 class="reveal">Specialized Programs</h2>
+      <p>Our departments at A.G.E.S focus on nurturing skills, innovation, and excellence, preparing students for real-world success in every field.</p>
+
+      <div class="grid">
+        <div class="program-card glass reveal">
+          <div class="icon-box"><i data-lucide="laptop-minimal-check"></i></div>
+          <h3>Technology</h3>
+          <p>Coding, AI, and Robotics built into the core curriculum.</p>
+        </div>
+
+        <div class="program-card glass reveal">
+          <div class="icon-box"><i data-lucide="palette"></i></div>
+          <h3>Digital Arts</h3>
+          <p>Mastering visual storytelling, 3D design, and media production.</p>
+        </div>
+
+        <div class="program-card glass reveal">
+          <div class="icon-box"><i data-lucide="microscope"></i></div>
+          <h3>Applied Sciences</h3>
+          <p>Hands-on laboratory research and environmental engineering.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="why" class="section-padding">
+      <div style="max-width: 1200px; margin: 0 auto">
+        <div class="reveal" style="margin-bottom: 50px">
+          <h2>Why Choose AGES?</h2>
+        </div>
+        <div class="grid why">
+          <div>
+            <i data-lucide="landmark" color="#6366f1"></i>
+            <h4>Smart Campus</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">IoT integrated classrooms for seamless learning.</p>
+          </div>
+
+          <div>
+            <i data-lucide="graduation-cap" color="#6366f1"></i>
+            <h4>Expert Mentors</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              Industry professionals from top tech and art hubs.
+            </p>
+          </div>
+
+          <div>
+            <i data-lucide="globe" color="#6366f1"></i>
+            <h4>Global Network</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              Partnerships with leading universities worldwide.
+            </p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section-padding">
+      <h2 style="text-align: center; margin-bottom: 40px" class="reveal">
+        What Parents Say
+      </h2>
+      <div class="testimonial-slider reveal">
+        <div class="testimonial-card glass">
+          <p>
+            "The focus on technology and individual growth at Nova is unmatched.
+            My daughter is already coding apps!"
+          </p>
+          <div style="margin-top: 20px; font-weight: 600">— Sarah Jenkins</div>
+        </div>
+        <div class="testimonial-card glass">
+          <p>
+            "A truly futuristic approach to education. The facilities look like
+            they're from 2050."
+          </p>
+          <div style="margin-top: 20px; font-weight: 600">— Mark Thompson</div>
+        </div>
+        <div class="testimonial-card glass">
+          <p>
+            "Finally, a school that prepares children for the real world
+            problems of tomorrow."
+          </p>
+          <div style="margin-top: 20px; font-weight: 600">— Dr. Aris V.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="apply" class="section-padding">
+      <div class="cta-section section-padding reveal">
+        <h2 style="font-size: 2rem; margin-bottom: 20px">Ready to join the future?</h2>
+        <p style="margin-bottom: 30px; color: var(--text-secondary)">
+          Enrollment for the 2026 Academic Year is now open.
+        </p>
+        <a href="#" class="btn btn-primary">Start Your Application</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="logo" style="margin-bottom: 20px">AGES ACADEMY</div>
+      <p style="color: var(--text-secondary)">123 Raliatu Street, Lagos, Nigeria</p>
+      <div class="footer-links">
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <p style="font-size: 0.8rem; color: #475569; margin-top: 40px">
+        &copy; 2026 AGES Academy. All rights reserved.
+      </p>
     </footer>
 
-    <div id="toast"></div>
+    <script>
+      lucide.createIcons();
+      // Navbar Scroll Effect
+      window.addEventListener("scroll", () => {
+        const nav = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+      });
+
+      // Scroll Reveal Animation
+      const observerOptions = {
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+
+      // Mobile Menu Toggle (Basic)
+      // const hamburger = document.querySelector(".hamburger");
+      // const navLinks = document.querySelector(".nav-links");
+
+      // hamburger.addEventListener("click", () => {
+      //   navLinks.style.display =
+      //     navLinks.style.display === "flex" ? "none" : "flex";
+      //   navLinks.style.flexDirection = "column";
+      //   navLinks.style.position = "absolute";
+      //   navLinks.style.top = "70px";
+      //   navLinks.style.left = "0";
+      //   navLinks.style.width = "100%";
+      //   navLinks.style.background = "var(--bg)";
+      //   navLinks.style.padding = "20px";
+      // });
+    </script>
   </body>
 </html>
