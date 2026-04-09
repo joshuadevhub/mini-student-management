@@ -61,7 +61,7 @@ loginForm.addEventListener("submit", async (event) => {
     if (!profileComplete) {
       window.location.href = "profile-completion-page.html";
     } else {
-      window.location.href = `students-detail-page.html?id=${user.uid}`;
+      window.location.href = `student-dashboard.html?id=${user.uid}`;
     }
   } catch (error) {
     console.error(error);

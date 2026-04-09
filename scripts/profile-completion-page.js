@@ -346,6 +346,11 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       await setDoc(doc(db, "students", auth.currentUser.uid), updatedStudent, {merge: true});
       showToast("Profile Updated Successfully", "success");
+
+      setTimeout(() => {
+        window.location.href = `student-dashboard.html?id=${uid}`
+      }, 2000);
+
     } catch (error) {
       console.log(error);
       showToast("Failed to update profile", "error");
