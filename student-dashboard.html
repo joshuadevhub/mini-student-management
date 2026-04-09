@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | A.G.E.S Academy</title>
+
+    <meta name="description" content="Access your student dashboard to view results, attendance, timetable, and school announcements.">
+    <meta name="keywords" content="student dashboard, school portal, results, attendance, timetable">
+    <meta name="author" content="Elemide Joshua Damilare">
+
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Student Dashboard | A.G.E.S Academy">
+    <meta property="og:description" content="View your results, attendance, timetable, and school updates in one place.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://joshuadevhub.github.io/mini-student-management/student-dashboard.html">
+    <meta property="og:image" content="https://joshuadevhub.github.io/mini-student-management/images/og-image.png">
+    <meta property="og:site_name" content="A.G.E.S School">
+
+
+    <!-- Standard favicon -->
+    <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
+    <!-- PNG formats -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <!-- Apple iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <!-- Android Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
+
+
+    <!-- Scripts and Links -->
+    <script src="scripts/firebase.js" type="module"></script>
+    <script src="scripts/student-dashboard.js" type="module"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="styles/student-dashboard.css">
+  </head>
+
+  <body>
+    <!-- Overlay for Mobile Sidebar -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i data-lucide="graduation-cap"></i>
+          <span>A.G.E.S</span>
+        </div>
+      </div>
+      <nav class="nav-menu">
+        <a href="#" class="nav-link active" data-link="dashboard">
+          <i data-lucide="layout-dashboard"></i> Dashboard
+        </a>
+        <a href="#" class="nav-link" data-link="results">
+          <i data-lucide="file-text"></i> My Results
+        </a>
+        <a href="#" class="nav-link" data-link="attendance">
+          <i data-lucide="calendar-check"></i> Attendance
+        </a>
+        <a href="#" class="nav-link" data-link="subjects">
+          <i data-lucide="book-open"></i> Subjects
+        </a>
+        <a href="#" class="nav-link" data-link="timetable">
+          <i data-lucide="clock"></i> Timetable
+        </a>
+        <a href="#" class="nav-link" data-link="announcements">
+          <i data-lucide="megaphone"></i> Announcements
+        </a>
+        <a href="#" class="nav-link" data-link="profile">
+          <i data-lucide="user"></i> Profile
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="index.html" class="logout-btn"><i data-lucide="log-out"></i> Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="wrapper">
+      <!-- Top Navbar -->
+      <header class="navbar">
+        <div class="nav-left">
+          <button id="menu-toggle" class="icon-btn">
+            <i data-lucide="menu"></i>
+          </button>
+          <h1 class="page-title">Dashboard</h1>
+        </div>
+        <div class="nav-right">
+          <!-- <button class="icon-btn">
+            <i data-lucide="search"></i>
+          </button> -->
+          <!-- <buttn id="profile-btn" class="profile-trigger">
+          </buttn> -->
+          <img class="avatar" id="avatar" />
+
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+          <h2 id="welcome-msg"></h2>
+          <p>Check your latest academic updates and upcoming classes.</p>
+        </section>
+
+        <!-- Stats Grid -->
+        <section class="stats-grid">
+          <div class="stat-card glass">
+            <div class="stat-icon purple">
+              <i data-lucide="book-marked"></i>
+            </div>
+            <div class="stat-info">
+              <span class="label">Total Subjects</span>
+              <h3 class="value" id="total-subject-value"></h3>
+            </div>
+          </div>
+
+          <div class="stat-card glass">
+            <div class="stat-icon green">
+              <i data-lucide="pie-chart"></i>
+            </div>
+            <div class="stat-info">
+              <span class="label">Attendance</span>
+              <h3 class="value" id="attendance-score"></h3>
+            </div>
+          </div>
+
+          <div class="stat-card glass">
+            <div class="stat-icon blue">
+              <i data-lucide="award"></i>
+            </div>
+            <div class="stat-info">
+              <span class="label">Latest Result</span>
+              <h3 class="value" id="latest-result"></h3>
+            </div>
+          </div>
+
+          <div class="stat-card glass">
+            <div class="stat-icon orange">
+              <i data-lucide="bar-chart-3"></i>
+            </div>
+            <div class="stat-info">
+              <span class="label">Average Score</span>
+              <h3 class="value" id="average-score"></h3>
+              <p class="sub-value">Current Session</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Announcements Section -->
+        <section class="announcements-section">
+          <div class="section-header">
+            <h3>Recent Announcements</h3>
+            <!-- <a href="#" class="view-all">View All</a> -->
+          </div>
+          <div class="announcement-list">
+            <div class="announcement-card glass">
+              <div class="announcement-indicator"></div>
+              <div class="announcement-body">
+                <h4>End of Term Closure</h4>
+                <p>
+                  The academic session has ended. Results will be available soon. Stay tuned!
+                </p>
+                <span class="time">2 hours ago</span>
+              </div>
+            </div>
+            <div class="announcement-card glass">
+              <div class="announcement-indicator"></div>
+              <div class="announcement-body">
+                <h4>Results & Next Session</h4>
+                <p>
+                  Results are being finalized. Next session dates will be updated here. Enjoy your break!
+                </p>
+                <span class="time">Yesterday</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+  </body>
+</html>
