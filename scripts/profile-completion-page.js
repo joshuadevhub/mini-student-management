@@ -268,12 +268,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const studentSnap = await getDoc(studentRef);
 
       if (!studentSnap.exists()) {
-        console.log("Student Docs not found!");
-        showToast("Profile not initialized. Please contact support.", "error");
+        // console.log("Student Docs not found!");
+        showToast("Profile not initialized properly. Please contact support.", "error");
         return;
       }
 
       const student = studentSnap.data();
+      // If profile is already completed, redirect to student dashboard
+      if (student.profileCompleted) {
+        window.location.href = "student-dashboard.html";
+        return;
+      }
       isLoaded = true;
       form.style.opacity = "1";
       form.style.pointerEvents = "auto";
@@ -355,8 +360,9 @@ document.addEventListener("DOMContentLoaded", () => {
       address: address.value.trim(),
       imgSrc: imgSrcValue,
       gender: Array.from(genderRadios).find((radio) => radio.checked)?.value,
-      scoreFinalized: false,
+      scoresFinalized: false,
       updatedAt: new Date(),
+      profileCompleted: true,
     };
 
     // Disable Submit button when saving
