@@ -125,9 +125,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       latestResult.textContent = 'Pending...';
       attendanceScore.textContent = "Pending...";
+      averageScore.textContent = "Pending..."
 
       latestResult.style.fontSize = "0.9rem";
       attendanceScore.style.fontSize = "0.9rem";
+      averageScore.style.fontSize = "0.9rem";
     }
 
   }

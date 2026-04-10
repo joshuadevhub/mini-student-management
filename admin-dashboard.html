@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management Admin Dashboard | AGES Academy</title>
+
+    <meta name="description" content="A modern school management admin dashboard to manage students, teachers, attendance, results, and fees efficiently.">
+    <meta name="keywords" content="school dashboard, admin panel, student management system, education dashboard">
+    <meta name="author" content="Elemide Joshua Damilare">
+    <meta name="theme-color" content="#0f172a">
+
+
+    <!-- OG Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="School Management Admin Dashboard | A.G.E.S Academy">
+    <meta property="og:description" content="Manage students, teachers, attendance, results, and fees in one modern dashboard.">
+    <meta property="og:image" content="https://joshuadevhub.github.io/mini-student-management/images/og-image.png">
+    <meta property="og:url" content="https://joshuadevhub.github.io/mini-student-management/admin-dashboard.html">
+    <meta property="og:site_name" content="School System Management">
+
+
+    <!-- Standard favicon -->
+    <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
+    <!-- PNG formats -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <!-- Apple iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <!-- Android Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
+
+
+    <!-- Links and Scripts -->
+    <link rel="stylesheet" href="styles/admin-dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Mobile Menu Toggle (Checkbox Hack for No-JS functionality) -->
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i data-lucide="graduation-cap"></i>
+                <span>A.G.E.S</span>
+            </div>
+            <label for="menu-toggle" class="close-menu">
+                <i data-lucide="x"></i>
+            </label>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+            <a href="#" class="nav-item"><i data-lucide="users"></i> Students</a>
+            <a href="#" class="nav-item"><i data-lucide="briefcase"></i> Teachers</a>
+            <a href="#" class="nav-item"><i data-lucide="book-open"></i> Classes</a>
+            <a href="#" class="nav-item"><i data-lucide="calendar-check"></i> Attendance</a>
+            <a href="#" class="nav-item"><i data-lucide="file-text"></i> Results</a>
+            <a href="#" class="nav-item"><i data-lucide="credit-card"></i> Fees</a>
+            <a href="#" class="nav-item"><i data-lucide="megaphone"></i> Announcements</a>
+            <a href="#" class="nav-item"><i data-lucide="clock"></i> Timetable</a>
+            <div class="nav-divider"></div>
+            <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navbar -->
+        <header class="navbar">
+            <div class="nav-left">
+                <label for="menu-toggle" class="hamburger">
+                    <i data-lucide="menu"></i>
+                </label>
+                <h1>Dashboard</h1>
+            </div>
+            <div class="nav-right">
+                <div class="search-bar">
+                    <i data-lucide="search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="icon-btn">
+                    <i data-lucide="bell"></i>
+                    <span class="badge"></span>
+                </div>
+                <div class="profile-avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin">
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="content-wrapper">
+            <header class="welcome-header">
+                <h2>Welcome back, Admin</h2>
+                <p>Here's what's happening in your school today.</p>
+            </header>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card glass">
+                    <div class="stat-icon purple"><i data-lucide="users"></i></div>
+                    <div class="stat-info">
+                        <h3>1,240</h3>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-icon blue"><i data-lucide="user-check"></i></div>
+                    <div class="stat-info">
+                        <h3>84</h3>
+                        <p>Total Teachers</p>
+                    </div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-icon green"><i data-lucide="trending-up"></i></div>
+                    <div class="stat-info">
+                        <h3>92%</h3>
+                        <p>Attendance Rate</p>
+                    </div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-icon orange"><i data-lucide="dollar-sign"></i></div>
+                    <div class="stat-info">
+                        <h3>$42,500</h3>
+                        <p>Fees Collected</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Grid Sections -->
+            <div class="dashboard-layout">
+                <!-- Recent Activities -->
+                <section class="glass-section glass">
+                    <div class="section-header">
+                        <h3>Recent Activities</h3>
+                        <button class="btn-text">View All</button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-dot"></div>
+                            <div class="activity-detail">
+                                <p><strong>New Teacher Hired:</strong> Sarah Jenkins joined Math Dept.</p>
+                                <span class="time">2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot"></div>
+                            <div class="activity-detail">
+                                <p><strong>Fee Update:</strong> Grade 10 fee structures updated.</p>
+                                <span class="time">5 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot"></div>
+                            <div class="activity-detail">
+                                <p><strong>System:</strong> Weekly backup completed successfully.</p>
+                                <span class="time">Yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Announcements & Quick Actions -->
+                <div class="secondary-column">
+                    <section class="glass-section glass">
+                        <div class="section-header">
+                            <h3>Announcements</h3>
+                        </div>
+                        <div class="announcement-card">
+                            <h4>Winter Holidays</h4>
+                            <p>School will remain closed from Dec 24th to Jan 5th.</p>
+                        </div>
+                        <div class="announcement-card">
+                            <h4>Annual Sports Day</h4>
+                            <p>Final registration date is tomorrow evening.</p>
+                        </div>
+                    </section>
+
+                    <section class="glass-section glass">
+                        <div class="section-header">
+                            <h3>Quick Actions</h3>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="action-btn"><i data-lucide="user-plus"></i> Add Student</button>
+                            <button class="action-btn"><i data-lucide="mail"></i> Send Email</button>
+                            <button class="action-btn"><i data-lucide="file-plus"></i> Create Report</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

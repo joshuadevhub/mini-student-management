@@ -1,5 +1,7 @@
 import { auth } from "./firebase.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+import { db } from "./firebase.js";
+import { doc, setDoc} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const signupForm = document.getElementById("signup-form");
 const errorMsg = document.getElementById("error-msg");
@@ -23,8 +25,17 @@ signupForm.addEventListener("submit", async (event) => {
       password,
     );
 
-    // Redirect to profile completion page with UID
-    window.location.href = `profile-completion-page.html?uid=${userCredential.user.uid}`;
+    const user = userCredential.user;
+
+    // Create student document in firestore
+    await setDoc(doc(db, "students", user.uid), {
+      email: user.email,
+      createdAt: new Date(),
+      profileCompleted: false,
+    });
+
+    // Redirect to profile completion page
+    window.location.href = `profile-completion-page.html`;
   } catch (error) {
     console.error("Sign up error:", error);
     switch (error.code) {
