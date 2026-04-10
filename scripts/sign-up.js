@@ -27,7 +27,7 @@ signupForm.addEventListener("submit", async (event) => {
 
     const user = userCredential.user;
 
-    // Create student document in firestore
+    // Create student document in fire store
     await setDoc(doc(db, "students", user.uid), {
       email: user.email,
       createdAt: new Date(),
