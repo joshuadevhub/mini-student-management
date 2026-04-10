@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log("Logged in User:", user.uid);
+      // console.log("Logged in User:", user.uid);
       loadStudentData(user.uid);
     } else {
       window.location.href = "login.html";
@@ -94,13 +94,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const docRef = doc(db, "students", uid);
     const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      console.log(data);
-      displayData(data);
-    } else {
-      console.log("Student Does not Exist");
+    if (!docSnap.exists()) {
+      window.location.href = "profile-completion-page.html"
+      return;
     }
+
+    const data = docSnap.data();
+    // Block if profile is not completed
+    if (!data.profileCompleted) {
+      window.location.href = "profile-completed-page.html";
+      return;
+    }
+    displayData(data);
   }
 
   const welcomeMsg = document.getElementById("welcome-msg");
@@ -121,7 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (data.scoresFinalized === true) {
       latestResult.textContent = `${data.overallResults.grade}`;
       averageScore.textContent = `${data.overallResults.average.toFixed(1)}%`
-      console.log("Bread");
     } else {
       latestResult.textContent = 'Pending...';
       attendanceScore.textContent = "Pending...";
