@@ -52,6 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Form Inputs
   // ===============================
   const form = document.getElementById("student-form");
+  form.style.opacity = "0.5";
+  form.style.pointerEvents = "none";
+
   const firstName = document.getElementById("first-name");
   const lastName = document.getElementById("last-name");
   const middleName = document.getElementById("middle-name");
@@ -61,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const address = document.getElementById("address");
   const profilePic = document.getElementById("profile-pic");
   const genderRadios = document.getElementsByName("gender");
+  let isLoaded = false;
 
   const touched = {}; // track fields touched for live validation
 
@@ -141,8 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
       clearError(subject); // empty → no error
       return false;
     }
-    if (selected.length < 9 || selected.length > 10) {
-      setErrorFor(subject, "Select between 9 and 10 subjects");
+    if (selected.length < 8 || selected.length > 10) {
+      setErrorFor(subject, "Select between 8 and 10 subjects");
       return false;
     }
     setSuccessFor(subject);
@@ -259,33 +263,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const studentId = user.uid;
     const studentRef = doc(db, "students", studentId);
-    const studentSnap = await getDoc(studentRef);
 
-    if (!studentSnap.exists()) {
-      console.log("Student Docs not found!");
-      return;
-    }
-    const student = studentSnap.data();
+    try {
+      const studentSnap = await getDoc(studentRef);
 
-    // Fill form fields with existing data (if any)
-    firstName.value = student.firstName || "";
-    lastName.value = student.lastName || "";
-    middleName.value = student.middleName || "";
-    studentDepartment.value = student.studentDepartment || "";
-    phoneNumber.value = student.phoneNumber || "";
-    address.value = student.address || "";
-    genderRadios.forEach((radio) => {
-      if (radio.value === student.gender) radio.checked = true;
-    });
-    if (student.subjects) {
-      Array.from(offeredSubject.options).forEach((opt) => {
-        if (student.subjects.includes(opt.value)) opt.selected = true;
+      if (!studentSnap.exists()) {
+        console.log("Student Docs not found!");
+        showToast("Profile not initialized. Please contact support.", "error");
+        return;
+      }
+
+      const student = studentSnap.data();
+      isLoaded = true;
+      form.style.opacity = "1";
+      form.style.pointerEvents = "auto";
+
+      // Fill form fields with existing data (if any)
+      firstName.value = student.firstName || "";
+      lastName.value = student.lastName || "";
+      middleName.value = student.middleName || "";
+      studentDepartment.value = student.studentDepartment || "";
+      phoneNumber.value = student.phoneNumber || "";
+      address.value = student.address || "";
+      genderRadios.forEach((radio) => {
+        if (radio.value === student.gender) radio.checked = true;
       });
+      if (student.subjects) {
+        Array.from(offeredSubject.options).forEach((opt) => {
+          if (student.subjects.includes(opt.value)) opt.selected = true;
+        });
+      }
+      if (student.imgSrc) {
+        // optionally show profile pic preview
+        imgSrcValue = student.imgSrc;
+      }
+    } catch (err) {
+      console.log("Error Fetching Student: ", err);
+      showToast("Failed to Fetch Student", "error");
     }
-    if (student.imgSrc) {
-      // optionally show profile pic preview
-      imgSrcValue = student.imgSrc;
-    }
+
   });
 
 
@@ -340,20 +356,30 @@ document.addEventListener("DOMContentLoaded", () => {
       imgSrc: imgSrcValue,
       gender: Array.from(genderRadios).find((radio) => radio.checked)?.value,
       scoreFinalized: false,
-      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
+    // Disable Submit button when saving
+    const submitBtn = form.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Saving...";
     try {
-      await setDoc(doc(db, "students", auth.currentUser.uid), updatedStudent, {merge: true});
+      await setDoc(doc(db, "students", auth.currentUser.uid), updatedStudent, {
+        merge: true,
+      });
       showToast("Profile Updated Successfully", "success");
 
+      const uid = auth.currentUser.uid;
       setTimeout(() => {
-        window.location.href = `student-dashboard.html?id=${uid}`
+        window.location.href = `student-dashboard.html`;
       }, 2000);
-
     } catch (error) {
       console.log(error);
       showToast("Failed to update profile", "error");
+    } finally {
+      // Remove the state from button
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Save profile";
     }
   });
 });
