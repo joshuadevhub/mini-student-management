@@ -8,7 +8,10 @@ import {
 const loginForm = document.getElementById("login-form");
 const errorMsg = document.getElementById("login-error");
 
-const ADMIN_EMAILS = ["elemide.j.dev@gmail.com", "peedaddy007@gmail.com"];
+const ADMIN_EMAILS = [
+  "elemide.j.dev@gmail.com",
+  "peedaddy007@gmail.com"
+].map(email => email.toLowerCase());
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -29,12 +32,17 @@ loginForm.addEventListener("submit", async (event) => {
     );
 
     const user = userCredentials.user;
+    const userEmail = user.email.trim().toLowerCase();
+    console.log("ADMIN LIST:", ADMIN_EMAILS);
 
+
+    console.log("RAW EMAIL:", user.email);
+    console.log("CLEAN EMAIL:", user.email.trim().toLowerCase());
     // -----------------
     // ADMIN CHECK
     // -----------------
-    if (ADMIN_EMAILS.includes(user.email)) {
-      console.log("LOGIN SUCCESS:", user.email);
+    if (ADMIN_EMAILS.includes(userEmail)) {
+      console.log("LOGIN SUCCESS:", userEmail);
       window.location.href = "students-list.html";
       return;
     }
