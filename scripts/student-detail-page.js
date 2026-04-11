@@ -222,7 +222,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const finalizeButton = document.getElementById("finalize-scores-btn");
   const param = new URLSearchParams(window.location.search);
   const studentId = param.get("id");
-  const adminEmail = "elemide.j.dev@gmail.com"; // <-- replace with your admin email
+  const ADMIN_EMAILS = ["elemide.j.dev@gmail.com", "peedaddy007@gmail.com"].map(
+    (email) => email.toLowerCase(),
+  );
+
 
   // ================= Load student data =================
   const studentRef = doc(db, "students", studentId);
@@ -331,7 +334,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ================= Admin check =================
   onAuthStateChanged(auth, (user) => {
-    if (user && user.email === adminEmail) {
+    const userEmail = user.email.trim().toLowerCase()
+    if (user && ADMIN_EMAILS.includes(userEmail)) {
       // Admin View
       saveButton.style.display = "block";
       finalizeButton.style.display = "block";

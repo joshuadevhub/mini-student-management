@@ -10,9 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const emptyState = document.getElementById("empty-state");
   const loadingState = document.getElementById("loading-state");
   const addBtn = document.getElementById("add-student-btn");
-  const adminEmail = "elemide.j.dev@gmail.com"; // Admin email
+  // const adminEmail = "elemide.j.dev@gmail.com";
+  const ADMIN_EMAILS = [
+    "elemide.j.dev@gmail.com",
+    "peedaddy007@gmail.com"
+  ].map(email => email.toLowerCase());
 
   function capitalizeWord(str) {
+    if (!str || typeof str !== "string") return "";
     return str
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -21,7 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Admin-only Access =====
   onAuthStateChanged(auth, (user) => {
-    if (!user || user.email !== adminEmail) {
+    if (!user) {
+      window.location.href = "login.html"; // redirect non-admin
+      return;
+    }
+    const userEmail = user.email.trim().toLowerCase();
+    if (!ADMIN_EMAILS.includes(userEmail)) {
       window.location.href = "login.html"; // redirect non-admin
       return;
     }
@@ -33,10 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Real-time listener =====
     onSnapshot(studentsCollection, (snapshot) => {
-      const students = snapshot.docs.map((doc) => ({
+      const students = snapshot.docs
+        .map((doc) => ({
         ...doc.data(),
         id: doc.id,
-      }));
+        }))
+        .filter((student) => student.profileCompleted == true);
 
       setTimeout(() => {
         loadingState.style.display = "none";
@@ -68,11 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
             studentCard.style.animation = `fadeInUp 0.5s forwards`;
             studentCard.style.animationDelay = `${index * 0.2}s`;
 
+            // console.log("Student:", student);
+            // console.log("Name field:", student.name);
+
             studentCard.innerHTML = `
               <div class="card-header">
                 <img src="${student.imgSrc}" alt="Student Profile" class="avatar">
                 <div class="header-info">
-                  <h3>${capitalizeWord(student.firstName)} ${capitalizeWord(student.lastName)}</h3>
+                  <h3>${capitalizeWord(student.firstName || "")} ${capitalizeWord(student.lastName || "")}</h3>
                   <p class="dept">${capitalizeWord(student.studentDepartment)} Department • Ss 1</p>
                 </div>
               </div>
@@ -89,12 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
 
               <div class="card-footer">
-                ${capitalizeWord(
-                  (student.subjects ?? [])
+                ${(student.subjects ?? [])
                     .slice(0, 3)
-                    .map((sub) => `<span class="subject-tag">${sub}</span>`)
-                    .join(""),
-                )}
+                    .map((sub) => `<span class="subject-tag">${capitalizeWord(sub)}</span>`)
+                    .join("")}
               </div>
             `;
 
