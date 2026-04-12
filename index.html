@@ -30,24 +30,34 @@
     <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png">
 
     <!-- Scripts and Links -->
-    <link rel="stylesheet" href="styles/index.css" />
+    <script src="scripts/main.js" type="module"></script>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/index.css">
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
 
   <body>
+    <div class="overlay"></div>
     <!-- Navbar -->
     <nav id="navbar">
       <div class="nav-container">
         <div class="logo">AGES ACADEMY</div>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#programs">Programs</a>
-          <a href="#why">Benefits</a>
-          <a href="#apply" class="btn btn-primary">Apply Now</a>
+
+        <div class="nav-links" id="nav-links">
+          <div>
+            <i data-lucide="x" id="close-icon"></i>
+          </div>
+          <a href="#" class="nav-active">Home</a>
+          <a href="#">About</a>
+          <a href="#">Programs</a>
+          <a href="#">Benefits</a>
+          <a href="#">Admission</a>
+          <a href="#">Contacts</a>
+          <!-- <a href="#apply" class="btn btn-primary">Apply Now</a> -->
         </div>
-        <div class="hamburger">
-          <i data-lucide="menu"></i>
-        </div>
+        <i data-lucide="menu" id="menu-icon"></i>
+        <!-- <img src="icons/menu-hambugger.svg" alt="Menu Icon" id="menu-icon"> -->
+
       </div>
     </nav>
 
@@ -71,17 +81,17 @@
     </header>
 
     <!-- About Section -->
-    <section id="about" class="section-padding">
+    <section id="about" class="section-padding reveal">
       <h2>Our Impacts by the Numbers</h2>
       <p>A.G.E.S is a forward-thinking institution dedicated to providing quality education and preparing students for real-world success.</p>
 
-      <div class="about-card-container grid">
-        <div class="about-card glass reveal">
+      <div class="about-card-container grid reveal">
+        <div class="about-card glass ">
           <h3>Our Mission</h3>
           <p>At AGES Academy, we believe the future belongs to the curious. Our mission is to deliver innovative and technology-driven education that empowers students with practical skills, and the confidence to thrive in the digital age.</p>
         </div>
 
-        <div class="about-card glass reveal">
+        <div class="about-card glass">
           <h3>Our Vision</h3>
           <p>At AGES Academy, we believe the future belongs to the curious. Our Vision is to become a center of excellence in modern education, shaping future leaders and innovators who will impact the world positively.</p>
         </div>
@@ -112,7 +122,7 @@
     </section>
 
     <!-- Programs Section -->
-    <section id="programs" class="section-padding">
+    <section id="programs" class="section-padding reveal">
       <h2 class="reveal">Specialized Programs</h2>
       <p>Our departments at A.G.E.S focus on nurturing skills, innovation, and excellence, preparing students for real-world success in every field.</p>
 
@@ -143,7 +153,7 @@
         <div class="reveal" style="margin-bottom: 50px">
           <h2>Why Choose AGES?</h2>
         </div>
-        <div class="grid why">
+        <div class="grid why reveal">
           <div>
             <i data-lucide="landmark" color="#6366f1"></i>
             <h4>Smart Campus</h4>
@@ -225,51 +235,5 @@
         &copy; 2026 AGES Academy. All rights reserved.
       </p>
     </footer>
-
-    <script>
-      lucide.createIcons();
-      // Navbar Scroll Effect
-      window.addEventListener("scroll", () => {
-        const nav = document.getElementById("navbar");
-        if (window.scrollY > 50) {
-          nav.classList.add("scrolled");
-        } else {
-          nav.classList.remove("scrolled");
-        }
-      });
-
-      // Scroll Reveal Animation
-      const observerOptions = {
-        threshold: 0.1,
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-          }
-        });
-      }, observerOptions);
-
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => observer.observe(el));
-
-      // Mobile Menu Toggle (Basic)
-      // const hamburger = document.querySelector(".hamburger");
-      // const navLinks = document.querySelector(".nav-links");
-
-      // hamburger.addEventListener("click", () => {
-      //   navLinks.style.display =
-      //     navLinks.style.display === "flex" ? "none" : "flex";
-      //   navLinks.style.flexDirection = "column";
-      //   navLinks.style.position = "absolute";
-      //   navLinks.style.top = "70px";
-      //   navLinks.style.left = "0";
-      //   navLinks.style.width = "100%";
-      //   navLinks.style.background = "var(--bg)";
-      //   navLinks.style.padding = "20px";
-      // });
-    </script>
   </body>
 </html>
