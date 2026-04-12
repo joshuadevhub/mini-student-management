@@ -8,10 +8,9 @@ import {
 const loginForm = document.getElementById("login-form");
 const errorMsg = document.getElementById("login-error");
 
-const ADMIN_EMAILS = [
-  "elemide.j.dev@gmail.com",
-  "peedaddy007@gmail.com"
-].map(email => email.toLowerCase());
+const ADMIN_EMAILS = ["elemide.j.dev@gmail.com", "peedaddy007@gmail.com"].map(
+  (email) => email.toLowerCase(),
+);
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -34,7 +33,6 @@ loginForm.addEventListener("submit", async (event) => {
     const user = userCredentials.user;
     const userEmail = user.email.trim().toLowerCase();
     console.log("ADMIN LIST:", ADMIN_EMAILS);
-
 
     console.log("RAW EMAIL:", user.email);
     console.log("CLEAN EMAIL:", user.email.trim().toLowerCase());
@@ -96,4 +94,20 @@ loginForm.addEventListener("submit", async (event) => {
         break;
     }
   }
+});
+
+const toggleBtn = document.querySelector("#togglePassword");
+const passwordInput = document.querySelector("#password");
+
+toggleBtn.addEventListener("click", () => {
+  const isPassword = passwordInput.type === "password";
+
+  passwordInput.type = isPassword ? "text" : "password";
+
+  // Replace the icon properly
+  toggleBtn.innerHTML = isPassword
+    ? '<i data-lucide="eye-off"></i>'
+    : '<i data-lucide="eye"></i>';
+
+  lucide.createIcons();
 });

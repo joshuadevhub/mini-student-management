@@ -4,7 +4,7 @@ import { db } from "./firebase.js";
 import { doc, setDoc} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const signupForm = document.getElementById("signup-form");
-const errorMsg = document.getElementById("error-msg");
+const errorMsg = document.getElementById("login-error");
 
 signupForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -54,4 +54,20 @@ signupForm.addEventListener("submit", async (event) => {
         break;
     }
   }
+});
+
+const toggleBtn = document.querySelector("#togglePassword");
+const passwordInput = document.querySelector("#password");
+
+toggleBtn.addEventListener("click", () => {
+  const isPassword = passwordInput.type === "password";
+
+  passwordInput.type = isPassword ? "text" : "password";
+
+  // Replace the icon properly
+  toggleBtn.innerHTML = isPassword
+    ? '<i data-lucide="eye-off"></i>'
+    : '<i data-lucide="eye"></i>';
+
+  lucide.createIcons();
 });
