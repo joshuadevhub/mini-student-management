@@ -74,7 +74,7 @@ nav.scrolled {
   position: fixed;
   right: 0;
   top: 0;
-  width: 80%;
+  width: 84%;
   height: 100%;
   background-color: var(--bg);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
