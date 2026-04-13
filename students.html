@@ -1,165 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Management | EduStream</title>
-    <link rel="stylesheet" href="styles/students.css">
+    <link rel="stylesheet" href="styles/students.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <i data-lucide="graduation-cap"></i>
-                <span>EduStream</span>
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <i data-lucide="graduation-cap"></i>
+          <span>EduStream</span>
+        </div>
+
+        <nav class="sidebar-menu">
+          <div class="menu-group">Main</div>
+          <a href="#" class="nav-link"
+            ><i data-lucide="layout-dashboard"></i> Dashboard</a
+          >
+          <a href="#" class="nav-link active"
+            ><i data-lucide="users"></i> Students</a
+          >
+          <a href="#" class="nav-link"
+            ><i data-lucide="briefcase"></i> Teachers</a
+          >
+
+          <div class="menu-group">Academic</div>
+          <a href="#" class="nav-link"
+            ><i data-lucide="book-open"></i> Classes</a
+          >
+          <a href="#" class="nav-link"
+            ><i data-lucide="calendar-check"></i> Attendance</a
+          >
+          <a href="#" class="nav-link"
+            ><i data-lucide="clipboard-list"></i> Exams</a
+          >
+
+          <div class="menu-group">Management</div>
+          <a href="#" class="nav-link"
+            ><i data-lucide="credit-card"></i> Finance</a
+          >
+          <a href="#" class="nav-link"
+            ><i data-lucide="settings"></i> Settings</a
+          >
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="main-area">
+        <!-- Navbar -->
+        <header class="top-nav glass">
+          <div class="nav-brand-mobile">
+            <i data-lucide="menu" class="menu-trigger"></i>
+            <h1>Students</h1>
+          </div>
+          <div class="nav-search">
+            <i data-lucide="search"></i>
+            <input type="text" placeholder="Global search students..." />
+          </div>
+          <div class="nav-actions">
+            <button class="icon-btn"><i data-lucide="bell"></i></button>
+            <div class="user-profile">
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin"
+                alt="Admin"
+              />
+              <span>Admin</span>
             </div>
-            
-            <nav class="sidebar-menu">
-                <div class="menu-group">Main</div>
-                <a href="#" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-                <a href="#" class="nav-link active"><i data-lucide="users"></i> Students</a>
-                <a href="#" class="nav-link"><i data-lucide="briefcase"></i> Teachers</a>
-                
-                <div class="menu-group">Academic</div>
-                <a href="#" class="nav-link"><i data-lucide="book-open"></i> Classes</a>
-                <a href="#" class="nav-link"><i data-lucide="calendar-check"></i> Attendance</a>
-                <a href="#" class="nav-link"><i data-lucide="clipboard-list"></i> Exams</a>
-                
-                <div class="menu-group">Management</div>
-                <a href="#" class="nav-link"><i data-lucide="credit-card"></i> Finance</a>
-                <a href="#" class="nav-link"><i data-lucide="settings"></i> Settings</a>
-            </nav>
-        </aside>
+          </div>
+        </header>
 
-        <!-- Main Content Area -->
-        <main class="main-area">
-            <!-- Navbar -->
-            <header class="top-nav glass">
-                <div class="nav-brand-mobile">
-                    <i data-lucide="menu" class="menu-trigger"></i>
-                    <h1>Students</h1>
-                </div>
-                <div class="nav-search">
-                    <i data-lucide="search"></i>
-                    <input type="text" placeholder="Global search students...">
-                </div>
-                <div class="nav-actions">
-                    <button class="icon-btn"><i data-lucide="bell"></i></button>
-                    <div class="user-profile">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin" alt="Admin">
-                        <span>Admin</span>
-                    </div>
-                </div>
-            </header>
+        <div class="content-padding">
+          <!-- Page Header Area -->
+          <section class="header-actions">
+            <div class="title-meta">
+              <h2>Student Directory</h2>
+              <p>Total: 1,240 enrolled students</p>
+            </div>
+            <button class="btn-primary">
+              <i data-lucide="user-plus"></i> Add New Student
+            </button>
+          </section>
 
-            <div class="content-padding">
-                <!-- Page Header Area -->
-                <section class="header-actions">
-                    <div class="title-meta">
-                        <h2>Student Directory</h2>
-                        <p>Total: 1,240 enrolled students</p>
-                    </div>
-                    <button class="btn-primary">
-                        <i data-lucide="user-plus"></i> Add New Student
-                    </button>
-                </section>
+          <!-- Filter Bar -->
+          <div class="filter-bar glass">
+            <div class="filter-inputs">
+              <div class="input-wrap">
+                <label>Class</label>
+                <select>
+                  <option>All Classes</option>
+                  <option>Grade 10</option>
+                </select>
+              </div>
+              <div class="input-wrap">
+                <label>Status</label>
+                <select>
+                  <option>Active</option>
+                  <option>Inactive</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn-secondary">
+              <i data-lucide="sliders-horizontal"></i> Filters
+            </button>
+          </div>
 
-                <!-- Filter Bar -->
-                <div class="filter-bar glass">
-                    <div class="filter-inputs">
-                        <div class="input-wrap">
-                            <label>Class</label>
-                            <select><option>All Classes</option><option>Grade 10</option></select>
-                        </div>
-                        <div class="input-wrap">
-                            <label>Status</label>
-                            <select><option>Active</option><option>Inactive</option></select>
-                        </div>
-                    </div>
-                    <button class="btn-secondary"><i data-lucide="sliders-horizontal"></i> Filters</button>
-                </div>
-
-                <!-- Solid Data Table -->
-                <div class="data-container glass">
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Student Name</th>
-                                    <th>Student ID</th>
-                                    <th>Class</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                    <th class="text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="name-cell">
-                                            <div class="avatar-sm">JD</div>
-                                            <span>John Doe</span>
-                                        </div>
-                                    </td>
-                                    <td>#STU-9920</td>
-                                    <td>Grade 10-A</td>
-                                    <td>john.d@school.com</td>
-                                    <td><span class="status-pill success">Active</span></td>
-                                    <td class="text-right">
-                                        <div class="action-group">
-                                            <button class="action-btn"><i data-lucide="eye"></i></button>
-                                            <button class="action-btn"><i data-lucide="edit"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="name-cell">
-                                            <div class="avatar-sm purple">SM</div>
-                                            <span>Sarah Miller</span>
-                                        </div>
-                                    </td>
-                                    <td>#STU-4412</td>
-                                    <td>Grade 11-B</td>
-                                    <td>sarah.m@school.com</td>
-                                    <td><span class="status-pill success">Active</span></td>
-                                    <td class="text-right">
-                                        <div class="action-group">
-                                            <button class="action-btn"><i data-lucide="eye"></i></button>
-                                            <button class="action-btn"><i data-lucide="edit"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- Table Footer / Pagination -->
-                    <div class="table-footer">
-                        <span>Showing 1-10 of 1,240</span>
-                        <div class="pagination-btns">
-                            <button class="btn-pagination" disabled><i data-lucide="chevron-left"></i></button>
-                            <button class="btn-pagination active">1</button>
-                            <button class="btn-pagination">2</button>
-                            <button class="btn-pagination"><i data-lucide="chevron-right"></i></button>
-                        </div>
-                    </div>
-                </div>
+          <!-- Solid Data Table -->
+          <div class="data-container glass">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student Name</th>
+                    <th>Student ID</th>
+                    <th>Class</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="name-cell">
+                        <div class="avatar-sm">JD</div>
+                        <span>John Doe</span>
+                      </div>
+                    </td>
+                    <td>#STU-9920</td>
+                    <td>Grade 10-A</td>
+                    <td>john.d@school.com</td>
+                    <td><span class="status-pill success">Active</span></td>
+                    <td class="text-right">
+                      <div class="action-group">
+                        <button class="action-btn">
+                          <i data-lucide="eye"></i>
+                        </button>
+                        <button class="action-btn">
+                          <i data-lucide="edit"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="name-cell">
+                        <div class="avatar-sm purple">SM</div>
+                        <span>Sarah Miller</span>
+                      </div>
+                    </td>
+                    <td>#STU-4412</td>
+                    <td>Grade 11-B</td>
+                    <td>sarah.m@school.com</td>
+                    <td><span class="status-pill success">Active</span></td>
+                    <td class="text-right">
+                      <div class="action-group">
+                        <button class="action-btn">
+                          <i data-lucide="eye"></i>
+                        </button>
+                        <button class="action-btn">
+                          <i data-lucide="edit"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <footer class="main-footer">
-                <p>© 2026 EduStream Admin Console • v1.0.4</p>
-                <div class="footer-links">
-                    <a href="#">Support</a>
-                    <a href="#">Privacy</a>
-                </div>
-            </footer>
-        </main>
+            <!-- Table Footer / Pagination -->
+            <div class="table-footer">
+              <span>Showing 1-10 of 1,240</span>
+              <div class="pagination-btns">
+                <button class="btn-pagination" disabled>
+                  <i data-lucide="chevron-left"></i>
+                </button>
+                <button class="btn-pagination active">1</button>
+                <button class="btn-pagination">2</button>
+                <button class="btn-pagination">
+                  <i data-lucide="chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="main-footer">
+          <p>© 2026 EduStream Admin Console • v1.0.4</p>
+          <div class="footer-links">
+            <a href="#">Support</a>
+            <a href="#">Privacy</a>
+          </div>
+        </footer>
+      </main>
     </div>
 
-    <script>lucide.createIcons();</script>
-</body>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
 </html>
