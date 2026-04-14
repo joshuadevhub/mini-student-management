@@ -76,7 +76,8 @@ body {
 
 .card-container {
   width: 100%;
-  max-width: 400px;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 /* --- Main Student Card --- */
@@ -296,11 +297,13 @@ body {
   .nav-item {
     padding: 10px 0;
   }
-}
-
-/* Mobile Tweak */
-@media (max-width: 480px) {
   .student-card {
     padding: 20px;
+  }
+}
+
+@media (min-width:768px){
+  .card-container{
+    grid-template-columns: repeat(4, 1fr);
   }
 }
