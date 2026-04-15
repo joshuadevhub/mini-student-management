@@ -130,6 +130,7 @@ footer {
   text-decoration: none;
 }
 
+
 @media (min-width:768px){
   #menu-icon, #close-icon{
     display: none;
