@@ -33,28 +33,30 @@
 
 
     <!-- Links and Scripts -->
+    <script src="scripts/main.js" type="module"></script>
     <link rel="stylesheet" href="styles/admin-dashboard.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+  <div class="overlay"></div>
 
     <!-- Mobile Menu Toggle (Checkbox Hack for No-JS functionality) -->
-    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <!-- <input type="checkbox" id="menu-toggle" class="menu-toggle"> -->
 
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="nav-links">
         <div class="sidebar-header">
             <div class="logo">
                 <i data-lucide="graduation-cap"></i>
                 <span>A.G.E.S</span>
             </div>
-            <label for="menu-toggle" class="close-menu">
-                <i data-lucide="x"></i>
+            <label for="close-icon" class="close-menu">
+                <i data-lucide="x" id="close-icon"></i>
             </label>
         </div>
         <nav class="sidebar-nav">
-            <a href="#" class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-            <a href="#" class="nav-item"><i data-lucide="users"></i> Students</a>
+            <a href="admin-dashboard.html" class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+            <a href="students.html" class="nav-item"><i data-lucide="users"></i> Students</a>
             <a href="#" class="nav-item"><i data-lucide="briefcase"></i> Teachers</a>
             <a href="#" class="nav-item"><i data-lucide="book-open"></i> Classes</a>
             <a href="#" class="nav-item"><i data-lucide="calendar-check"></i> Attendance</a>
@@ -72,8 +74,8 @@
         <!-- Top Navbar -->
         <header class="navbar">
             <div class="nav-left">
-                <label for="menu-toggle" class="hamburger">
-                    <i data-lucide="menu"></i>
+                <label for="menu-icon" class="hamburger">
+                    <i data-lucide="menu" id="menu-icon"></i>
                 </label>
                 <h1>Dashboard</h1>
             </div>
@@ -196,7 +198,6 @@
     </main>
 
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
     </script>
 </body>
