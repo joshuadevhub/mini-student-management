@@ -1,0 +1,489 @@
+:root {
+  --primary: #1E3A8A;
+  --secondary: #F3F4F6;
+  --accent-green: #16A34A;
+  --accent-blue: #2563EB;
+  --accent-yellow: #F59E0B;
+  --accent-red: #DC2626;
+  --accent-orange: #EA580C;
+  --text-main: #1F2937;
+  --text-muted: #6B7280;
+  --white: #ffffff;
+  --border: #E5E7EB;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: auto;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  line-height: 1.5;
+  background: #D1D5DB;
+}
+.full-container{
+  width: 60%;
+  margin: 1rem auto;
+}
+
+/* 8. Download Button */
+.action-bar {
+  margin: 1rem 0 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-download {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-download:hover {
+  background: #1e3a8aee;
+}
+
+h1 { font-size: 18px; }
+
+
+/* Page Container (A4 Simulation) */
+.report-container {
+  width: 100%;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+}
+
+/* 1. Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.school-info h1 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.school-info p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.session-boxes{
+  padding: 8px 0
+}
+
+.report-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 5px;
+}
+
+.session-box {
+  font-size: 0.85rem;
+  background: var(--secondary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: right;
+}
+
+/* 2. Student Card */
+.student-card {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  gap: 20px;
+  background: var(--secondary);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  margin: 1rem 0;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: block;
+}
+
+.val {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.student-photo img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid var(--white);
+  object-position: center top;
+}
+
+/* 3. Table */
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  table-layout: fixed;
+}
+
+.results-table th {
+  background: var(--primary);
+  color: var(--white);
+  position: sticky;
+  top: 0;
+}
+
+.results-table td {
+  border-bottom: 1px solid var(--border);
+}
+.results-table th,
+.results-table td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  font-size: 11px;
+  padding: 8px;
+
+}
+
+.results-table tbody tr:nth-child(even) {
+  background: #F9FAFB;
+}
+
+.results-table tbody tr:hover {
+  background: inherit;
+}
+tbody > tr td:first-child{
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Grades */
+.grade {
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+}
+
+.grade-a { color: var(--accent-green); background: #DCFCE7; }
+.grade-b { color: var(--accent-blue); background: #DBEAFE; }
+.grade-c { color: var(--accent-yellow); background: #DBEAFE; }
+.grade-d { color: var(--accent-orange); background: #FFEDD5; }
+.grade-f { color: var(--accent-red); background: #FEE2E2; }
+.text-red { color: var(--accent-red); }
+
+/* 4. Summary Stats */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* 5. Grading & Remarks */
+.footer-meta {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  margin-bottom: 10px;
+  align-items: start;
+}
+
+.grading-scale h3 {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.scale-grid {
+  font-size: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.remark-box {
+  margin-bottom: 1rem;
+}
+
+.remark-box > h3{
+  font-size: 0.9rem;
+  margin-bottom: 0.15rem;
+  color: var(--primary);
+}
+
+.remark-box p {
+  font-size: 0.8rem;
+  padding-top: 5px;
+  border-bottom: 1px dotted var(--border);
+}
+
+/* 7. Signatures */
+.signatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+.sig-block {
+  width: 200px;
+  text-align: center;
+}
+
+.sig-line {
+  border-top: 1px solid var(--text-main);
+  margin-bottom: 8px;
+}
+
+.sig-block p {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.date {
+  font-weight: 400 !important;
+  color: var(--text-muted);
+}
+
+
+
+@media (max-width: 768px) {
+
+  body {
+    /* font-size: 11px; */
+    background-color: white;
+  }
+
+  .full-container{
+    width: 100%;
+  }
+  .report-container {
+    padding: 12px;
+    border-radius: 0;
+    max-width: 100%;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .report-meta {
+    width: 100%;
+  }
+  .session-box{
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .student-card {
+    /* grid-template-columns: 1fr; */
+    gap: 15px;
+  }
+
+  .student-photo {
+    text-align: center;
+  }
+
+  .student-photo img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .remark-box p{
+    font-size: 0.75rem;
+  }
+  .footer-meta {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .signatures {
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .sig-block {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  .action-bar {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .btn-download {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .results-table {
+    min-width: 700px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  .school-info h1, .school-info p, .report-title{
+    text-align: center;
+  }
+  .school-info h1{
+    padding: 0;
+    margin: 0;
+    font-size: 1.4rem;
+  }
+  .report-title{
+    font-size: 1.2rem;
+  }
+
+  /* PDF Mode */
+  .pdf-mode {
+    transform: none !important;
+    width: 210mm !important;
+  }
+
+  .pdf-mode .student-card,
+  .pdf-mode .detail-grid,
+  .pdf-mode .summary-grid,
+  .pdf-mode .footer-meta {
+    all: unset;
+    display: grid;
+  }
+}
+
+/* PRINT OPTIMIZATION */
+@media print {
+  body { 
+    background: white !important; 
+    padding: 0; 
+  }
+  .no-print { display: none; }
+
+  .report-container { 
+    width: 100%;
+    /* max-width: 100%; */
+    padding: 12mm;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .action-bar {
+    display: none;
+  }
+  .results-table th { 
+    background-color: var(--primary) !important; 
+    -webkit-print-color-adjust: exact; 
+  }
+  .grade { border: 1px solid #ccc; }
+}
+
+/* PDF Mode */
+.pdf-mode * {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.pdf-mode {
+  width: 210mm;
+  max-width: 210mm;
+  margin: 0 auto;
+  background: white;
+  overflow: visible;
+  font-size: 12px;
+  font-family: Inter, Arial, sans-serif;
+  padding-top: 15mm;
+}
+.pdf-mode img {
+  image-rendering: auto;
+}
+
+.pdf-mode .student-card {
+  grid-template-columns: 1fr 150px !important;
+}
+
+.pdf-mode .detail-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+.pdf-mode .summary-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+
+.pdf-mode .footer-meta {
+  grid-template-columns: 1fr 2fr !important;
+}
