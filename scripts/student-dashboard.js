@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
 
   const menuToggle = document.getElementById("menu-toggle");
+  const closeToggle = document.getElementById("close-button");
   const sidebar = document.getElementById("sidebar");
   const overlay = document.getElementById("overlay");
   const navLinks = document.querySelectorAll(".nav-link");
@@ -16,22 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
   /**
    * Toggle Sidebar Functionality
    */
-  const toggleSidebar = () => {
-    sidebar.classList.toggle("open");
-    overlay.classList.toggle("show");
-
-    // Change menu icon based on state
-    const icon = menuToggle.querySelector("i");
-    if (sidebar.classList.contains("open")) {
-      icon.setAttribute("data-lucide", "x");
-    } else {
-      icon.setAttribute("data-lucide", "menu");
-    }
-    lucide.createIcons(); // Refresh icon
-  };
-
-  menuToggle.addEventListener("click", toggleSidebar);
-  overlay.addEventListener("click", toggleSidebar);
+  menuToggle.addEventListener("click", () => {
+    sidebar.classList.add("open");
+    overlay.classList.add("show");
+  });
+  closeToggle.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+  })
 
   /**
    * Active Link State Handler
@@ -55,16 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /**
-   * Profile Button Animation
-   */
-  // profileBtn.addEventListener("click", () => {
-  //   profileBtn.style.transform = "scale(0.95)";
-  //   setTimeout(() => {
-  //     profileBtn.style.transform = "scale(1)";
-  //     alert("Profile settings would open here.");
-  //   }, 150);
-  // });
 
   /**
    * Responsive Logic: Handle window resizing
