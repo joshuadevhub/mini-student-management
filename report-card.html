@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Report Card - Academic Session 2023/24</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="scripts/firebase.js" type="module"></script>
+    <script src="scripts/report-card.js" type="module"></script>
+    <link rel="stylesheet" href="styles/report-card.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  </head>
+
+  <body>
+
+    <div class="full-container">
+      <!-- Action Bar (Hidden on Print) -->
+      <div class="action-bar">
+        <button class="btn-download" id="download-pdf">Download Report Card (PDF)</button>
+      </div>
+  
+      <div class="report-container">
+        <!-- 1. HEADER SECTION -->
+        <header class="header">
+          <div class="school-brand">
+            <div class="school-info">
+              <h1>Academic Greater Excellent Student</h1>
+              <div class="session-boxes">
+                <p>08 Raliatu Street off Messiah Street, Meiran, Lagos State</p>
+                <p>Contact: +234 (813) 753-4996 | peedaddy007@gmail.com</p>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="report-meta">
+            <h2 class="report-title">STUDENT REPORT CARD</h2>
+            <div class="session-box">
+              <p><strong>TERM:</strong> Second Term</p>
+              <p><strong>SESSION:</strong> 2025/2026 </p>
+            </div>
+          </div>
+        </header>
+  
+        <!-- 2. STUDENT INFORMATION CARD -->
+        <section class="student-card">
+          <div class="student-details">
+            <div class="detail-grid">
+              <div class="field">
+                <span class="label">Student Name:</span>
+                <span class="val" id="student-name"></span>
+              </div>
+              <!-- <div class="field"><span class="label">Student ID:</span> <span class="val">STU-2023-0892</span></div> -->
+              <div class="field">
+                <span class="label">Class:</span>
+                <span class="val" id="class"></span>
+              </div>
+              <div class="field">
+                <span class="label">Gender:</span> <span class="val" id="gender"></span>
+              </div>
+              <div class="field">
+                <span class="label">Attendance:</span>
+                <span class="val">120 / 122 Days</span>
+              </div>
+            </div>
+          </div>
+          <div class="student-photo">
+            <img id="student-passport" />
+          </div>
+        </section>
+  
+        <!-- 3. RESULT TABLE -->
+        <section class="table-wrapper">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Note (10)</th>
+                <th>Test (30)</th>
+                <th>Exam (60)</th>
+                <th>Total (100)</th>
+                <th>Grade</th>
+                <th>Remark</th>
+              </tr>
+            </thead>
+  
+            <tbody id="results-body">
+              <tr>
+                <td>Mathematics</td>
+                <td>28</td>
+                <td>09</td>
+                <td>54</td>
+                <td><strong>91</strong></td>
+                <td><span class="grade grade-a">A</span></td>
+                <td>Excellent</td>
+              </tr>
+              <tr>
+                <td>English Language</td>
+                <td>22</td>
+                <td>08</td>
+                <td>45</td>
+                <td><strong>75</strong></td>
+                <td><span class="grade grade-a">A</span></td>
+                <td>Very Good</td>
+              </tr>
+              <tr>
+                <td>Physics</td>
+                <td>20</td>
+                <td>07</td>
+                <td>35</td>
+                <td><strong>62</strong></td>
+                <td><span class="grade grade-b">B</span></td>
+                <td>Credit</td>
+              </tr>
+              <tr>
+                <td>Fine Arts</td>
+                <td>15</td>
+                <td>06</td>
+                <td>24</td>
+                <td><strong>45</strong></td>
+                <td><span class="grade grade-d">D</span></td>
+                <td>Pass</td>
+              </tr>
+              <tr>
+                <td>Chemistry</td>
+                <td>10</td>
+                <td>05</td>
+                <td>18</td>
+                <td><strong class="text-red">33</strong></td>
+                <td><span class="grade grade-f">F</span></td>
+                <td>Fail</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+  
+        <!-- 4. SUMMARY SECTION -->
+        <section class="summary-grid">
+          <div class="stat-card">
+            <span class="stat-label">Total Score</span>
+            <span class="stat-value" id="total-score"></span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Average %</span>
+            <span class="stat-value" id="average-score"></span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Grade Avg.</span>
+            <span class="stat-value" id="grade"></span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Class Position</span>
+            <span class="stat-value">-</span>
+          </div>
+        </section>
+  
+        <!-- 5. GRADING SYSTEM & REMARKS -->
+        <div class="footer-meta">
+          <div class="grading-scale">
+            <h3>Grading Key</h3>
+            <div class="scale-grid">
+              <span><strong>A</strong> (70-100)</span>
+              <span><strong>B</strong> (60-69)</span>
+              <span><strong>C</strong> (50-59)</span>
+              <span><strong>D</strong> (45-49)</span>
+              <span><strong>E</strong> (40-44)</span>
+              <span><strong>F</strong> (0-39)</span>
+            </div>
+          </div>
+  
+          <div class="remarks">
+            <div class="remark-box">
+              <h3>Teacher's Comment:</h3>
+              <p id="teacher-comment"></p>
+            </div>
+            <div class="remark-box">
+              <h3>Principal's Comment:</h3>
+              <p id="principal-comment"></p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- 7. SIGNATURE SECTION -->
+        <footer class="signatures">
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <p>Class Teacher Signature</p>
+          </div>
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <p>Principal Signature</p>
+            <p class="date">Date: 12th July, 2024</p>
+          </div>
+        </footer>
+      </div>
+
+    </div>
+
+
+  </body>
+</html>
