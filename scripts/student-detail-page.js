@@ -391,7 +391,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  const viewReportCard = document.getElementById("view-report-card");
+  const viewReportCard = document.getElementById("view-report-cards");
   viewReportCard.addEventListener("click", () => {
     window.location.href = `report-card.html?id=${studentId}`;
   })
