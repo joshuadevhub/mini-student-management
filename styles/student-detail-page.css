@@ -235,3 +235,58 @@ textarea { height: 60px; resize: none; font-size: 0.85rem; }
   }
   .input-section { margin-bottom: 0; }
 }
+
+.report-loader{
+  position: fixed;
+  inset: 0;
+  background: var(--bg-dark);
+  backdrop-filter: blur(8px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+}
+
+.report-loader.hidden{
+  display:none;
+}
+
+.loader-card{
+  width: min(92%, 360px);
+  background: var(--glass);
+  border:1px solid var(--border);
+  padding:2rem;
+  border-radius:24px;
+  text-align:center;
+  color:var(--text-p);
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+
+.loader-card h3{
+  margin:1rem 0 .5rem;
+  font-size:1.1rem;
+  color:var(--text-p);
+}
+
+.loader-card p{
+  font-size:.95rem;
+  opacity:.85;
+  line-height:1.5;
+  color:var(--text-s);
+}
+
+.spinner-ring{
+  width:58px;
+  height:58px;
+  margin:auto;
+  border-radius:50%;
+  border:5px solid rgba(255,255,255,.2);
+  border-top:4px solid var(--accent);
+  animation:spin .85s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
