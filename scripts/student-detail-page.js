@@ -391,8 +391,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // const viewReportCard = document.getElementById("view-report-cards");
+  // viewReportCard.addEventListener("click", () => {
+  //   window.location.href = `report-card.html?id=${studentId}`;
+  // })
+
   const viewReportCard = document.getElementById("view-report-cards");
-  viewReportCard.addEventListener("click", () => {
-    window.location.href = `report-card.html?id=${studentId}`;
-  })
+  const reportLoader = document.getElementById("report-loader");
+
+  viewReportCard.addEventListener("click", async () => {
+    reportLoader.classList.remove("hidden");
+    viewReportCard.disabled = true;
+
+    setTimeout(() => {
+      window.location.href = `report-card.html?id=${studentId}`;
+    }, 3000);
+  });
 });
