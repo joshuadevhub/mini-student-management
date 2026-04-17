@@ -390,4 +390,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   });
+
+  const viewReportCard = document.getElementById("view-report-card");
+  viewReportCard.addEventListener("click", () => {
+    window.location.href = `report-card.html?id=${studentId}`;
+  })
 });

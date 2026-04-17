@@ -181,7 +181,7 @@ textarea { height: 60px; resize: none; font-size: 0.85rem; }
   /* display: block; */
 }
 
-#save-scores-btn, #finalize-scores-btn {
+#save-scores-btn, #finalize-scores-btn, #view-report-cards {
   background: var(--accent);
   color: white;
   border: none;

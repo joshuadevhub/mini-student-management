@@ -81,8 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  let currentUserId = null;
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      currentUserId = user.uid;
       // console.log("Logged in User:", user.uid);
       loadStudentData(user.uid);
     } else {
@@ -111,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const welcomeMsg = document.getElementById("welcome-msg");
   const profilePic = document.getElementById("avatar");
   const totalSubValue = document.getElementById("total-subject-value");
-  const latestResult = document.getElementById("latest-result");
+  let latestResult = document.getElementById("latest-result");
   const attendanceScore = document.getElementById("attendance-score");
   const averageScore = document.getElementById("average-score");
 
@@ -124,7 +126,19 @@ document.addEventListener("DOMContentLoaded", () => {
     totalSubValue.textContent = `${data.subjects.length}`;
 
     if (data.scoresFinalized === true) {
-      latestResult.textContent = `${data.overallResults.grade}`;
+      let currentResult = data.overallResults.grade
+      latestResult.textContent = currentResult;
+      if (currentResult === "A") {
+        latestResult.style.color = "#16A34A";
+      } else if (currentResult === "B") {
+        latestResult.style.color = "#2563EB";
+      } else if (currentResult === "C") {
+        latestResult.style.color = "#F59E0B";
+      } else if (currentResult === "D") {
+        latestResult.style.color = "#EA580C";
+      } else {
+        latestResult.style.color = "#DC2626";
+      }
       averageScore.textContent = `${data.overallResults.average.toFixed(1)}%`
     } else {
       latestResult.textContent = 'Pending...';
@@ -137,4 +151,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
   }
+  const studentDetailPage = document.getElementById("student-result");
+  studentDetailPage.addEventListener("click", () => {
+    window.location.href = `students-detail-page.html?id=${currentUserId}`;
+  })
 });
