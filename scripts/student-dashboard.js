@@ -38,9 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
       link.classList.add("active");
 
       // Close sidebar on mobile after clicking a link
-      if (window.innerWidth < 1024) {
-        toggleSidebar();
-      }
+      // if (window.innerWidth < 1024) {
+      //   toggleSidebar();
+      // }
 
       // Update Page Title in Navbar
       const pageTitle = document.querySelector(".page-title");
@@ -134,6 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
   }
+  const studentHomeDashboard = document.getElementById("student-home");
+  studentHomeDashboard.addEventListener("click", () => {
+    window.location.href = `student-dashboard.html?id=${currentUserId}`;
+  })
+  
   const studentDetailPage = document.getElementById("student-result");
   studentDetailPage.addEventListener("click", () => {
     window.location.href = `students-detail-page.html?id=${currentUserId}`;
